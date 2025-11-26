@@ -9,8 +9,29 @@ namespace Kyrsovay
         public RegistrationForm()
         {
             InitializeComponent();
+
+            // Центрируем панель при запуске
+            CenterPanel();
+
+            // Центрируем при каждом изменении размера окна
+            this.Resize += RegistrationForm_Resize;
         }
 
+        // Центрирование панели с полями
+        private void RegistrationForm_Resize(object sender, EventArgs e)
+        {
+            CenterPanel();
+        }
+
+        private void CenterPanel()
+        {
+            if (panelCenter == null) return;
+
+            panelCenter.Left = (this.ClientSize.Width - panelCenter.Width) / 2;
+            panelCenter.Top = (this.ClientSize.Height - panelCenter.Height) / 2;
+        }
+
+        // ЛОГИКА РЕГИСТРАЦИИ
         private void btnRegister_Click(object sender, EventArgs e)
         {
             string name = txtName.Text.Trim();
@@ -20,11 +41,12 @@ namespace Kyrsovay
             string password = txtPassword.Text.Trim();
             string password2 = txtPasswordRepeat.Text.Trim();
 
+            // Простая проверка
             if (string.IsNullOrEmpty(name) ||
                 string.IsNullOrEmpty(login) ||
                 string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("Заполните обязательные поля!");
+                MessageBox.Show("Заполните обязательные поля (ФИО, логин, пароль)!");
                 return;
             }
 
@@ -44,24 +66,26 @@ namespace Kyrsovay
 
                     string sql = @"
                         INSERT INTO Клиенты (ФИО, Телефон, Email, Логин, Пароль)
-                        VALUES (@name, @phone, @email, @login, @pass)
+                        VALUES (@name, @phone, @mail, @login, @pass);
                     ";
 
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@name", name);
-                    cmd.Parameters.AddWithValue("@phone", phone);
-                    cmd.Parameters.AddWithValue("@email", email);
-                    cmd.Parameters.AddWithValue("@login", login);
-                    cmd.Parameters.AddWithValue("@pass", password);
+                    using (SqlCommand cmd = new SqlCommand(sql, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@name", name);
+                        cmd.Parameters.AddWithValue("@phone", phone);
+                        cmd.Parameters.AddWithValue("@mail", email);
+                        cmd.Parameters.AddWithValue("@login", login);
+                        cmd.Parameters.AddWithValue("@pass", password);
 
-                    cmd.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                    }
 
-                    MessageBox.Show("Регистрация выполнена!");
+                    MessageBox.Show("Регистрация выполнена успешно!");
                     this.Close();
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Ошибка: " + ex.Message);
+                    MessageBox.Show("Ошибка при регистрации: " + ex.Message);
                 }
             }
         }

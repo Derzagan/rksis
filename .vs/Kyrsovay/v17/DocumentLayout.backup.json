@@ -3,28 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|c:\\users\\w2\\source\\repos\\kyrsovay\\kyrsovay\\clientmainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\clientmainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|c:\\users\\w2\\source\\repos\\kyrsovay\\kyrsovay\\managermainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\managermainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|c:\\users\\w2\\source\\repos\\kyrsovay\\kyrsovay\\clientmainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\clientmainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|c:\\users\\w2\\source\\repos\\kyrsovay\\kyrsovay\\managermainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\managermainform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|C:\\Users\\w2\\source\\repos\\Kyrsovay\\kyrsovay\\clientmainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\clientmainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|c:\\users\\w2\\source\\repos\\kyrsovay\\kyrsovay\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|c:\\users\\w2\\source\\repos\\kyrsovay\\kyrsovay\\loginform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\loginform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|c:\\users\\w2\\source\\repos\\kyrsovay\\kyrsovay\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\loginform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|c:\\users\\w2\\source\\repos\\kyrsovay\\kyrsovay\\managermainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D78EB654-23D4-4C9F-B1AF-29CDE9AF6545}|Kyrsovay\\Kyrsovay.csproj|solutionrelative:kyrsovay\\managermainform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +22,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,79 +34,41 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "LoginForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\LoginForm.Designer.cs",
-              "RelativeDocumentMoniker": "Kyrsovay\\LoginForm.Designer.cs",
-              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\LoginForm.Designer.cs",
-              "RelativeToolTip": "Kyrsovay\\LoginForm.Designer.cs",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAYwGQAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T15:01:09.943Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "LoginForm.cs",
-              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\LoginForm.cs",
-              "RelativeDocumentMoniker": "Kyrsovay\\LoginForm.cs",
-              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\LoginForm.cs",
-              "RelativeToolTip": "Kyrsovay\\LoginForm.cs",
-              "ViewState": "AgIAAHAAAAAAAAAAAAAuwJIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T14:56:57.439Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "LoginForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\LoginForm.cs",
-              "RelativeDocumentMoniker": "Kyrsovay\\LoginForm.cs",
-              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\LoginForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "RelativeToolTip": "Kyrsovay\\LoginForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T14:53:24.825Z",
-              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "ClientMainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ClientMainForm.cs",
-              "RelativeDocumentMoniker": "Kyrsovay\\ClientMainForm.cs",
-              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ClientMainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "RelativeToolTip": "Kyrsovay\\ClientMainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-26T13:47:01.107Z",
-              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ClientMainForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ClientMainForm.Designer.cs",
-              "RelativeDocumentMoniker": "Kyrsovay\\ClientMainForm.Designer.cs",
-              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ClientMainForm.Designer.cs",
-              "RelativeToolTip": "Kyrsovay\\ClientMainForm.Designer.cs",
-              "ViewState": "AgIAAH0BAAAAAAAAAAAUwJkBAAAAAAAAAAAAAA==",
+              "Title": "ManagerMainForm.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ManagerMainForm.Designer.cs",
+              "RelativeDocumentMoniker": "Kyrsovay\\ManagerMainForm.Designer.cs",
+              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ManagerMainForm.Designer.cs*",
+              "RelativeToolTip": "Kyrsovay\\ManagerMainForm.Designer.cs*",
+              "ViewState": "AgIAAEkBAAAAAAAAAAAUwG8BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T20:42:46.888Z",
+              "WhenOpened": "2025-11-26T16:41:20.817Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "ClientMainForm.cs",
-              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ClientMainForm.cs",
-              "RelativeDocumentMoniker": "Kyrsovay\\ClientMainForm.cs",
-              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ClientMainForm.cs",
-              "RelativeToolTip": "Kyrsovay\\ClientMainForm.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAcwBwAAAAAAAAAAAAAAA==",
+              "Title": "ManagerMainForm.cs",
+              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ManagerMainForm.cs",
+              "RelativeDocumentMoniker": "Kyrsovay\\ManagerMainForm.cs",
+              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ManagerMainForm.cs*",
+              "RelativeToolTip": "Kyrsovay\\ManagerMainForm.cs*",
+              "ViewState": "AgIAAAIAAAAAAAAAAAArwBgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-25T20:15:30.521Z",
+              "WhenOpened": "2025-11-26T16:41:12.854Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ManagerMainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]",
+              "DocumentMoniker": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ManagerMainForm.cs",
+              "RelativeDocumentMoniker": "Kyrsovay\\ManagerMainForm.cs",
+              "ToolTip": "C:\\Users\\w2\\source\\repos\\Kyrsovay\\Kyrsovay\\ManagerMainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]*",
+              "RelativeToolTip": "Kyrsovay\\ManagerMainForm.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]*",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-26T16:41:02.152Z",
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u043A\u0442\u043E\u0440]"
             }
           ]
         }
