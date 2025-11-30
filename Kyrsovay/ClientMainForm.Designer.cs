@@ -26,6 +26,9 @@
             this.panelContent = new System.Windows.Forms.Panel();
             this.panelOrders = new System.Windows.Forms.Panel();
             this.gridOrders = new System.Windows.Forms.DataGridView();
+            this.panelOrderActions = new System.Windows.Forms.Panel();
+            this.btnGetReceipt = new System.Windows.Forms.Button();
+            this.btnPayOrder = new System.Windows.Forms.Button();
             this.panelFilter = new System.Windows.Forms.Panel();
             this.lblFilterTitle = new System.Windows.Forms.Label();
             this.btnFilterByPrice = new System.Windows.Forms.Button();
@@ -68,6 +71,7 @@
             this.panelContent.SuspendLayout();
             this.panelOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).BeginInit();
+            this.panelOrderActions.SuspendLayout();
             this.panelFilter.SuspendLayout();
             this.panelCreate.SuspendLayout();
             this.panelProfile.SuspendLayout();
@@ -205,6 +209,7 @@
             // panelOrders
             // 
             this.panelOrders.Controls.Add(this.gridOrders);
+            this.panelOrders.Controls.Add(this.panelOrderActions);
             this.panelOrders.Controls.Add(this.panelFilter);
             this.panelOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOrders.Location = new System.Drawing.Point(0, 0);
@@ -225,12 +230,68 @@
             this.gridOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrders.EnableHeadersVisualStyles = false;
             this.gridOrders.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            // panelOrderActions
+            // 
+            this.panelOrderActions.BackColor = System.Drawing.Color.White;
+            this.panelOrderActions.Controls.Add(this.btnGetReceipt);
+            this.panelOrderActions.Controls.Add(this.btnPayOrder);
+            this.panelOrderActions.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelOrderActions.Location = new System.Drawing.Point(0, 450);
+            this.panelOrderActions.Name = "panelOrderActions";
+            this.panelOrderActions.Padding = new System.Windows.Forms.Padding(15);
+            this.panelOrderActions.Size = new System.Drawing.Size(720, 100);
+            this.panelOrderActions.TabIndex = 2;
+            this.panelOrderActions.Visible = false;
+            // 
+            // btnPayOrder
+            // 
+            this.btnPayOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(167)))), ((int)(((byte)(69)))));
+            this.btnPayOrder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnPayOrder.FlatAppearance.BorderSize = 0;
+            this.btnPayOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPayOrder.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnPayOrder.ForeColor = System.Drawing.Color.White;
+            this.btnPayOrder.Location = new System.Drawing.Point(15, 15);
+            this.btnPayOrder.Name = "btnPayOrder";
+            this.btnPayOrder.Size = new System.Drawing.Size(180, 40);
+            this.btnPayOrder.TabIndex = 0;
+            this.btnPayOrder.Text = "💳 Оплатить";
+            this.btnPayOrder.UseVisualStyleBackColor = false;
+            // 
+            // btnGetReceipt
+            // 
+            this.btnGetReceipt.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btnGetReceipt.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnGetReceipt.FlatAppearance.BorderSize = 0;
+            this.btnGetReceipt.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnGetReceipt.Font = new System.Drawing.Font("Segoe UI", 10F, System.Drawing.FontStyle.Bold);
+            this.btnGetReceipt.ForeColor = System.Drawing.Color.White;
+            this.btnGetReceipt.Location = new System.Drawing.Point(205, 15);
+            this.btnGetReceipt.Name = "btnGetReceipt";
+            this.btnGetReceipt.Size = new System.Drawing.Size(180, 40);
+            this.btnGetReceipt.TabIndex = 1;
+            this.btnGetReceipt.Text = "🧾 Получить чек";
+            this.btnGetReceipt.UseVisualStyleBackColor = false;
+            // 
+            // gridOrders
+            // 
+            this.gridOrders.AllowUserToAddRows = false;
+            this.gridOrders.AllowUserToDeleteRows = false;
+            this.gridOrders.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.gridOrders.BackgroundColor = System.Drawing.Color.White;
+            this.gridOrders.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.gridOrders.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
+            this.gridOrders.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.gridOrders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.gridOrders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridOrders.EnableHeadersVisualStyles = false;
+            this.gridOrders.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
             this.gridOrders.Location = new System.Drawing.Point(0, 140);
             this.gridOrders.Name = "gridOrders";
             this.gridOrders.ReadOnly = true;
             this.gridOrders.RowHeadersVisible = false;
             this.gridOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrders.Size = new System.Drawing.Size(720, 410);
+            this.gridOrders.Size = new System.Drawing.Size(720, 310);
             this.gridOrders.TabIndex = 0;
             // 
             // panelFilter
@@ -677,6 +738,7 @@
             this.panelContent.ResumeLayout(false);
             this.panelOrders.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).EndInit();
+            this.panelOrderActions.ResumeLayout(false);
             this.panelFilter.ResumeLayout(false);
             this.panelFilter.PerformLayout();
             this.panelCreate.ResumeLayout(false);
@@ -704,6 +766,9 @@
 
         private System.Windows.Forms.Panel panelOrders;
         private System.Windows.Forms.DataGridView gridOrders;
+        private System.Windows.Forms.Panel panelOrderActions;
+        private System.Windows.Forms.Button btnPayOrder;
+        private System.Windows.Forms.Button btnGetReceipt;
         private System.Windows.Forms.Panel panelFilter;
         private System.Windows.Forms.Label lblFilterTitle;
         private System.Windows.Forms.Button btnFilterByPrice;

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Report xmlns="http://schemas.microsoft.com/sqlserver/reporting/2008/01/reportdefinition" xmlns:rd="http://schemas.microsoft.com/SQLServer/reporting/reportdesigner">
+  <Body>
+    <ReportItems>
+      <Textbox Name="txtTitle">
+        <Value>ЧЕК ОБ ОПЛАТЕ</Value>
+        <Style>
+          <FontSize>18pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+          <TextAlign>Center</TextAlign>
+        </Style>
+        <Top>0.2in</Top>
+        <Left>0.5in</Left>
+        <Height>0.4in</Height>
+        <Width>7in</Width>
+      </Textbox>
+      <Textbox Name="txtCompany">
+        <Value>Сервисный центр "ТехноСервис"</Value>
+        <Style>
+          <FontSize>12pt</FontSize>
+          <TextAlign>Center</TextAlign>
+        </Style>
+        <Top>0.6in</Top>
+        <Left>0.5in</Left>
+        <Height>0.3in</Height>
+        <Width>7in</Width>
+      </Textbox>
+      <Line Name="line1">
+        <Top>1in</Top>
+        <Left>0.5in</Left>
+        <Height>0.01in</Height>
+        <Width>7in</Width>
+        <Style>
+          <BorderColor>Black</BorderColor>
+          <BorderWidth>1pt</BorderWidth>
+        </Style>
+      </Line>
+      <Textbox Name="txtOrderNumber">
+        <Value>Номер заказа: =Fields!OrderNumber.Value</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+        </Style>
+        <Top>1.1in</Top>
+        <Left>0.5in</Left>
+        <Height>0.25in</Height>
+        <Width>3.5in</Width>
+      </Textbox>
+      <Textbox Name="txtPaymentNumber">
+        <Value>Номер оплаты: =Fields!PaymentNumber.Value</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+        </Style>
+        <Top>1.1in</Top>
+        <Left>4in</Left>
+        <Height>0.25in</Height>
+        <Width>3.5in</Width>
+      </Textbox>
+      <Textbox Name="txtClientLabel">
+        <Value>Клиент:</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+        </Style>
+        <Top>1.4in</Top>
+        <Left>0.5in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+      </Textbox>
+      <Textbox Name="txtClientName">
+        <Value>=Fields!ClientName.Value</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+        </Style>
+        <Top>1.4in</Top>
+        <Left>1.6in</Left>
+        <Height>0.25in</Height>
+        <Width>6in</Width>
+      </Textbox>
+      <Textbox Name="txtMasterLabel">
+        <Value>Мастер:</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+        </Style>
+        <Top>1.7in</Top>
+        <Left>0.5in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+      </Textbox>
+      <Textbox Name="txtMasterName">
+        <Value>=Fields!MasterName.Value</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+        </Style>
+        <Top>1.7in</Top>
+        <Left>1.6in</Left>
+        <Height>0.25in</Height>
+        <Width>6in</Width>
+      </Textbox>
+      <Textbox Name="txtDeviceLabel">
+        <Value>Устройство:</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+        </Style>
+        <Top>2in</Top>
+        <Left>0.5in</Left>
+        <Height>0.25in</Height>
+        <Width>1in</Width>
+      </Textbox>
+      <Textbox Name="txtDevice">
+        <Value>=Fields!Device.Value</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+        </Style>
+        <Top>2in</Top>
+        <Left>1.6in</Left>
+        <Height>0.25in</Height>
+        <Width>6in</Width>
+      </Textbox>
+      <Textbox Name="txtIssueLabel">
+        <Value>Описание проблемы:</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+        </Style>
+        <Top>2.3in</Top>
+        <Left>0.5in</Left>
+        <Height>0.25in</Height>
+        <Width>1.5in</Width>
+      </Textbox>
+      <Textbox Name="txtIssue">
+        <Value>=Fields!Issue.Value</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+        </Style>
+        <Top>2.3in</Top>
+        <Left>2.1in</Left>
+        <Height>0.5in</Height>
+        <Width>5.5in</Width>
+      </Textbox>
+      <Line Name="line2">
+        <Top>2.9in</Top>
+        <Left>0.5in</Left>
+        <Height>0.01in</Height>
+        <Width>7in</Width>
+        <Style>
+          <BorderColor>Black</BorderColor>
+          <BorderWidth>1pt</BorderWidth>
+        </Style>
+      </Line>
+      <Textbox Name="txtPriceLabel">
+        <Value>ИТОГО К ОПЛАТЕ:</Value>
+        <Style>
+          <FontSize>14pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+        </Style>
+        <Top>3.1in</Top>
+        <Left>0.5in</Left>
+        <Height>0.4in</Height>
+        <Width>4in</Width>
+      </Textbox>
+      <Textbox Name="txtPrice">
+        <Value>=Format(Fields!Price.Value, "N0") &amp; " ₸"</Value>
+        <Style>
+          <FontSize>16pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+          <TextAlign>Right</TextAlign>
+          <Color>#FF0000</Color>
+        </Style>
+        <Top>3.1in</Top>
+        <Left>4.5in</Left>
+        <Height>0.4in</Height>
+        <Width>3in</Width>
+      </Textbox>
+      <Textbox Name="txtPaymentMethodLabel">
+        <Value>Способ оплаты:</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+        </Style>
+        <Top>3.6in</Top>
+        <Left>0.5in</Left>
+        <Height>0.25in</Height>
+        <Width>1.5in</Width>
+      </Textbox>
+      <Textbox Name="txtPaymentMethod">
+        <Value>=Fields!PaymentMethod.Value</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+        </Style>
+        <Top>3.6in</Top>
+        <Left>2.1in</Left>
+        <Height>0.25in</Height>
+        <Width>5.5in</Width>
+      </Textbox>
+      <Textbox Name="txtPaymentDateLabel">
+        <Value>Дата и время оплаты:</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+          <FontWeight>Bold</FontWeight>
+        </Style>
+        <Top>3.9in</Top>
+        <Left>0.5in</Left>
+        <Height>0.25in</Height>
+        <Width>2in</Width>
+      </Textbox>
+      <Textbox Name="txtPaymentDate">
+        <Value>=Format(Fields!PaymentDate.Value, "dd.MM.yyyy HH:mm")</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+        </Style>
+        <Top>3.9in</Top>
+        <Left>2.6in</Left>
+        <Height>0.25in</Height>
+        <Width>5in</Width>
+      </Textbox>
+      <Line Name="line3">
+        <Top>4.3in</Top>
+        <Left>0.5in</Left>
+        <Height>0.01in</Height>
+        <Width>7in</Width>
+        <Style>
+          <BorderColor>Black</BorderColor>
+          <BorderWidth>1pt</BorderWidth>
+        </Style>
+      </Line>
+      <Textbox Name="txtFooter">
+        <Value>Спасибо за ваш выбор!</Value>
+        <Style>
+          <FontSize>10pt</FontSize>
+          <TextAlign>Center</TextAlign>
+          <FontStyle>Italic</FontStyle>
+        </Style>
+        <Top>4.5in</Top>
+        <Left>0.5in</Left>
+        <Height>0.3in</Height>
+        <Width>7in</Width>
+      </Textbox>
+    </ReportItems>
+    <Height>5in</Height>
+    <Style />
+  </Body>
+  <Width>8in</Width>
+  <Page>
+    <PageHeight>11in</PageHeight>
+    <PageWidth>8.5in</PageWidth>
+    <LeftMargin>1in</LeftMargin>
+    <RightMargin>1in</RightMargin>
+    <TopMargin>1in</TopMargin>
+    <BottomMargin>1in</BottomMargin>
+    <ColumnSpacing>0.5in</ColumnSpacing>
+  </Page>
+  <DataSources>
+    <DataSource Name="ReceiptDataSource">
+      <ConnectionProperties>
+        <DataProvider>System.Data.DataSet</DataProvider>
+        <ConnectString />
+      </ConnectionProperties>
+      <rd:DataSourceID>a1b2c3d4-e5f6-7890-abcd-ef1234567890</rd:DataSourceID>
+    </DataSource>
+  </DataSources>
+  <DataSets>
+    <DataSet Name="ReceiptDataSet">
+      <Query>
+        <DataSourceName>ReceiptDataSource</DataSourceName>
+        <CommandText />
+      </Query>
+      <Fields>
+        <Field Name="ClientName">
+          <DataField>ClientName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="MasterName">
+          <DataField>MasterName</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Device">
+          <DataField>Device</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Issue">
+          <DataField>Issue</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+        <Field Name="Price">
+          <DataField>Price</DataField>
+          <rd:TypeName>System.Decimal</rd:TypeName>
+        </Field>
+        <Field Name="PaymentDate">
+          <DataField>PaymentDate</DataField>
+          <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="OrderNumber">
+          <DataField>OrderNumber</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="PaymentNumber">
+          <DataField>PaymentNumber</DataField>
+          <rd:TypeName>System.Int32</rd:TypeName>
+        </Field>
+        <Field Name="PaymentMethod">
+          <DataField>PaymentMethod</DataField>
+          <rd:TypeName>System.String</rd:TypeName>
+        </Field>
+      </Fields>
+    </DataSet>
+  </DataSets>
+</Report>
+

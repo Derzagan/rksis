@@ -41,6 +41,11 @@ namespace Kyrsovay
             cmbIssue.SelectedIndexChanged += cmbIssue_SelectedIndexChanged;
             chkCustomDevice.CheckedChanged += chkCustomDevice_CheckedChanged;
 
+            // Оплата и чек
+            btnPayOrder.Click += BtnPayOrder_Click;
+            btnGetReceipt.Click += BtnGetReceipt_Click;
+            gridOrders.SelectionChanged += GridOrders_SelectionChanged;
+
             InitializeFilterStatus();
 
             cmbDeviceType.Items.AddRange(new string[]
@@ -58,6 +63,9 @@ namespace Kyrsovay
 
             ShowOrdersPanel();
         }
+
+        private int _selectedOrderId = -1;
+        private bool _isOrderPaid = false;
 
         // ========== ИНИЦИАЛИЗАЦИЯ ФИЛЬТРА СТАТУСОВ ==========
         private void InitializeFilterStatus()
@@ -89,6 +97,158 @@ namespace Kyrsovay
 
             gridOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
             gridOrders.RowTemplate.Height = 35;
+        }
+
+        // ========== ВЫБОР ЗАКАЗА ==========
+        private void GridOrders_SelectionChanged(object sender, EventArgs e)
+        {
+            if (gridOrders.SelectedRows.Count > 0)
+            {
+                _selectedOrderId = Convert.ToInt32(gridOrders.SelectedRows[0].Cells["№"].Value);
+                string status = gridOrders.SelectedRows[0].Cells["Статус"].Value?.ToString();
+                decimal price = Convert.ToDecimal(gridOrders.SelectedRows[0].Cells["Цена"].Value ?? 0);
+
+                // Проверяем, оплачен ли заказ
+                CheckPaymentStatus(_selectedOrderId);
+
+                // Показываем кнопки только для заказов со статусом "Готово"
+                if (status == "Готово" && price > 0)
+                {
+                    panelOrderActions.Visible = true;
+                    btnPayOrder.Visible = !_isOrderPaid;
+                    btnGetReceipt.Visible = _isOrderPaid;
+                }
+                else
+                {
+                    panelOrderActions.Visible = false;
+                }
+            }
+            else
+            {
+                panelOrderActions.Visible = false;
+                _selectedOrderId = -1;
+            }
+        }
+
+        private void CheckPaymentStatus(int orderId)
+        {
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string sql = "SELECT COUNT(*) FROM Оплаты WHERE Код_заказа = @orderId";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@orderId", orderId);
+                    int count = Convert.ToInt32(cmd.ExecuteScalar());
+                    _isOrderPaid = count > 0;
+                }
+            }
+            catch
+            {
+                _isOrderPaid = false;
+            }
+        }
+
+        // ========== ОПЛАТА ЗАКАЗА ==========
+        private void BtnPayOrder_Click(object sender, EventArgs e)
+        {
+            if (_selectedOrderId == -1)
+            {
+                MessageBox.Show("Выберите заказ для оплаты!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Получаем информацию о заказе
+            decimal orderPrice = 0;
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string sql = "SELECT Цена FROM Заказы WHERE Код_заказа = @orderId";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@orderId", _selectedOrderId);
+                    object result = cmd.ExecuteScalar();
+                    if (result != null && result != DBNull.Value)
+                        orderPrice = Convert.ToDecimal(result);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка получения данных заказа: " + ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (orderPrice <= 0)
+            {
+                MessageBox.Show("Цена заказа не установлена!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Диалог выбора способа оплаты
+            using (PaymentMethodDialog dialog = new PaymentMethodDialog(orderPrice))
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    string paymentMethod = dialog.PaymentMethod;
+                    
+                    try
+                    {
+                        using (SqlConnection conn = new SqlConnection(_connectionString))
+                        {
+                            conn.Open();
+                            string sql = @"
+                                INSERT INTO Оплаты (Код_заказа, Дата_оплаты, Сумма, Способ_оплаты, Код_клиента)
+                                VALUES (@orderId, @date, @amount, @method, @clientId)";
+                            SqlCommand cmd = new SqlCommand(sql, conn);
+                            cmd.Parameters.AddWithValue("@orderId", _selectedOrderId);
+                            cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                            cmd.Parameters.AddWithValue("@amount", orderPrice);
+                            cmd.Parameters.AddWithValue("@method", paymentMethod);
+                            cmd.Parameters.AddWithValue("@clientId", _clientId);
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        MessageBox.Show("✓ Оплата успешно проведена!", "Успех",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        _isOrderPaid = true;
+                        btnPayOrder.Visible = false;
+                        btnGetReceipt.Visible = true;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Ошибка проведения оплаты: " + ex.Message, "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
+
+        // ========== ПОЛУЧЕНИЕ ЧЕКА ==========
+        private void BtnGetReceipt_Click(object sender, EventArgs e)
+        {
+            if (_selectedOrderId == -1)
+            {
+                MessageBox.Show("Выберите заказ!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!_isOrderPaid)
+            {
+                MessageBox.Show("Заказ не оплачен!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Открываем форму с чеком
+            ReceiptForm receiptForm = new ReceiptForm(_selectedOrderId, _connectionString);
+            receiptForm.ShowDialog();
         }
 
         // ========== ФОРМАТИРОВАНИЕ КОЛОНОК ==========
