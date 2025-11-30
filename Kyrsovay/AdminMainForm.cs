@@ -35,6 +35,20 @@ namespace Kyrsovay
             // События управления заказами
             btnDeleteOrder.Click += BtnDeleteOrder_Click;
 
+            // События фильтров сотрудников
+            btnFilterEmployeeByName.Click += BtnFilterEmployeeByName_Click;
+            btnResetEmployeeFilter.Click += BtnResetEmployeeFilter_Click;
+
+            // События фильтров должностей
+            btnFilterPositionByName.Click += BtnFilterPositionByName_Click;
+            btnResetPositionFilter.Click += BtnResetPositionFilter_Click;
+
+            // События фильтров заказов
+            btnFilterOrderByName.Click += BtnFilterOrderByName_Click;
+            btnFilterOrderByPrice.Click += BtnFilterOrderByPrice_Click;
+            btnFilterOrderByDate.Click += BtnFilterOrderByDate_Click;
+            btnResetOrderFilter.Click += BtnResetOrderFilter_Click;
+
             // Стилизация DataGridView
             StyleDataGridView(gridEmployees);
             StyleDataGridView(gridPositions);
@@ -124,7 +138,7 @@ namespace Kyrsovay
         }
 
         // ========== ЗАГРУЗКА ДАННЫХ ==========
-        private void LoadEmployees()
+        private void LoadEmployees(string orderBy = "s.ФИО ASC")
         {
             try
             {
@@ -132,7 +146,7 @@ namespace Kyrsovay
                 {
                     conn.Open();
 
-                    string sql = @"
+                    string sql = $@"
                         SELECT 
                             s.Код_сотрудника AS [№],
                             s.ФИО AS [ФИО],
@@ -142,7 +156,7 @@ namespace Kyrsovay
                             CASE WHEN s.Активен = 1 THEN 'Да' ELSE 'Нет' END AS [Активен]
                         FROM Сотрудники s
                         JOIN Должности d ON s.Код_должности = d.Код_должности
-                        ORDER BY s.ФИО";
+                        ORDER BY {orderBy}";
 
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                     DataTable table = new DataTable();
@@ -162,7 +176,7 @@ namespace Kyrsovay
             }
         }
 
-        private void LoadPositions()
+        private void LoadPositions(string orderBy = "Наименование ASC")
         {
             try
             {
@@ -170,12 +184,12 @@ namespace Kyrsovay
                 {
                     conn.Open();
 
-                    string sql = @"
+                    string sql = $@"
                         SELECT 
                             Код_должности AS [№],
                             Наименование AS [Название должности]
                         FROM Должности
-                        ORDER BY Наименование";
+                        ORDER BY {orderBy}";
 
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                     DataTable table = new DataTable();
@@ -191,7 +205,7 @@ namespace Kyrsovay
             }
         }
 
-        private void LoadOrders()
+        private void LoadOrders(string orderBy = "z.Дата_заказа DESC")
         {
             try
             {
@@ -199,7 +213,7 @@ namespace Kyrsovay
                 {
                     conn.Open();
 
-                    string sql = @"
+                    string sql = $@"
                         SELECT 
                             z.Код_заказа AS [№],
                             z.Дата_заказа AS [Дата],
@@ -211,7 +225,7 @@ namespace Kyrsovay
                         FROM Заказы z
                         JOIN Клиенты c ON z.Код_клиента = c.Код_клиента
                         LEFT JOIN Сотрудники s ON z.Код_сотрудника = s.Код_сотрудника
-                        ORDER BY z.Дата_заказа DESC";
+                        ORDER BY {orderBy}";
 
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                     DataTable table = new DataTable();
@@ -461,6 +475,99 @@ namespace Kyrsovay
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        // ========== ФИЛЬТРЫ СОТРУДНИКОВ ==========
+        private void BtnFilterEmployeeByName_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem itemAZ = new ToolStripMenuItem("А → Я (по возрастанию)");
+            itemAZ.Click += (s, ev) => LoadEmployees("s.ФИО ASC");
+            menu.Items.Add(itemAZ);
+
+            ToolStripMenuItem itemZA = new ToolStripMenuItem("Я → А (по убыванию)");
+            itemZA.Click += (s, ev) => LoadEmployees("s.ФИО DESC");
+            menu.Items.Add(itemZA);
+
+            menu.Show(btnFilterEmployeeByName, new Point(0, btnFilterEmployeeByName.Height));
+        }
+
+        private void BtnResetEmployeeFilter_Click(object sender, EventArgs e)
+        {
+            LoadEmployees();
+        }
+
+        // ========== ФИЛЬТРЫ ДОЛЖНОСТЕЙ ==========
+        private void BtnFilterPositionByName_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem itemAZ = new ToolStripMenuItem("А → Я (по возрастанию)");
+            itemAZ.Click += (s, ev) => LoadPositions("Наименование ASC");
+            menu.Items.Add(itemAZ);
+
+            ToolStripMenuItem itemZA = new ToolStripMenuItem("Я → А (по убыванию)");
+            itemZA.Click += (s, ev) => LoadPositions("Наименование DESC");
+            menu.Items.Add(itemZA);
+
+            menu.Show(btnFilterPositionByName, new Point(0, btnFilterPositionByName.Height));
+        }
+
+        private void BtnResetPositionFilter_Click(object sender, EventArgs e)
+        {
+            LoadPositions();
+        }
+
+        // ========== ФИЛЬТРЫ ЗАКАЗОВ ==========
+        private void BtnFilterOrderByName_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem itemAZ = new ToolStripMenuItem("А → Я (клиенты по возрастанию)");
+            itemAZ.Click += (s, ev) => LoadOrders("c.ФИО ASC");
+            menu.Items.Add(itemAZ);
+
+            ToolStripMenuItem itemZA = new ToolStripMenuItem("Я → А (клиенты по убыванию)");
+            itemZA.Click += (s, ev) => LoadOrders("c.ФИО DESC");
+            menu.Items.Add(itemZA);
+
+            menu.Show(btnFilterOrderByName, new Point(0, btnFilterOrderByName.Height));
+        }
+
+        private void BtnFilterOrderByPrice_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem itemDesc = new ToolStripMenuItem("Самые дорогие (по убыванию)");
+            itemDesc.Click += (s, ev) => LoadOrders("z.Цена DESC");
+            menu.Items.Add(itemDesc);
+
+            ToolStripMenuItem itemAsc = new ToolStripMenuItem("Самые дешёвые (по возрастанию)");
+            itemAsc.Click += (s, ev) => LoadOrders("z.Цена ASC");
+            menu.Items.Add(itemAsc);
+
+            menu.Show(btnFilterOrderByPrice, new Point(0, btnFilterOrderByPrice.Height));
+        }
+
+        private void BtnFilterOrderByDate_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem itemNew = new ToolStripMenuItem("Сначала новые (по убыванию)");
+            itemNew.Click += (s, ev) => LoadOrders("z.Дата_заказа DESC");
+            menu.Items.Add(itemNew);
+
+            ToolStripMenuItem itemOld = new ToolStripMenuItem("Сначала старые (по возрастанию)");
+            itemOld.Click += (s, ev) => LoadOrders("z.Дата_заказа ASC");
+            menu.Items.Add(itemOld);
+
+            menu.Show(btnFilterOrderByDate, new Point(0, btnFilterOrderByDate.Height));
+        }
+
+        private void BtnResetOrderFilter_Click(object sender, EventArgs e)
+        {
+            LoadOrders();
         }
     }
 

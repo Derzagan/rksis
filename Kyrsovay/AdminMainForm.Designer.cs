@@ -30,30 +30,44 @@
             this.btnEditEmployee = new System.Windows.Forms.Button();
             this.btnDeleteEmployee = new System.Windows.Forms.Button();
             this.btnToggleActive = new System.Windows.Forms.Button();
+            this.panelEmployeeFilter = new System.Windows.Forms.Panel();
+            this.btnFilterEmployeeByName = new System.Windows.Forms.Button();
+            this.btnResetEmployeeFilter = new System.Windows.Forms.Button();
             this.panelPositions = new System.Windows.Forms.Panel();
             this.gridPositions = new System.Windows.Forms.DataGridView();
             this.panelPositionButtons = new System.Windows.Forms.Panel();
             this.btnAddPosition = new System.Windows.Forms.Button();
             this.btnDeletePosition = new System.Windows.Forms.Button();
+            this.panelPositionFilter = new System.Windows.Forms.Panel();
+            this.btnFilterPositionByName = new System.Windows.Forms.Button();
+            this.btnResetPositionFilter = new System.Windows.Forms.Button();
             this.panelOrders = new System.Windows.Forms.Panel();
             this.gridOrders = new System.Windows.Forms.DataGridView();
             this.panelOrdersTop = new System.Windows.Forms.Panel();
             this.lblOrdersTitle = new System.Windows.Forms.Label();
             this.panelOrdersButtons = new System.Windows.Forms.Panel();
             this.btnDeleteOrder = new System.Windows.Forms.Button();
+            this.panelOrderFilter = new System.Windows.Forms.Panel();
+            this.btnFilterOrderByName = new System.Windows.Forms.Button();
+            this.btnFilterOrderByPrice = new System.Windows.Forms.Button();
+            this.btnFilterOrderByDate = new System.Windows.Forms.Button();
+            this.btnResetOrderFilter = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelContent.SuspendLayout();
             this.panelEmployees.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridEmployees)).BeginInit();
             this.panelEmployeeButtons.SuspendLayout();
+            this.panelEmployeeFilter.SuspendLayout();
             this.panelPositions.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridPositions)).BeginInit();
             this.panelPositionButtons.SuspendLayout();
+            this.panelPositionFilter.SuspendLayout();
             this.panelOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).BeginInit();
             this.panelOrdersTop.SuspendLayout();
             this.panelOrdersButtons.SuspendLayout();
+            this.panelOrderFilter.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelHeader
@@ -170,12 +184,55 @@
             // 
             this.panelEmployees.Controls.Add(this.gridEmployees);
             this.panelEmployees.Controls.Add(this.panelEmployeeButtons);
+            this.panelEmployees.Controls.Add(this.panelEmployeeFilter);
             this.panelEmployees.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelEmployees.Location = new System.Drawing.Point(0, 0);
             this.panelEmployees.Name = "panelEmployees";
             this.panelEmployees.Padding = new System.Windows.Forms.Padding(20);
             this.panelEmployees.Size = new System.Drawing.Size(800, 550);
             this.panelEmployees.TabIndex = 0;
+            // 
+            // panelEmployeeFilter
+            // 
+            this.panelEmployeeFilter.BackColor = System.Drawing.Color.White;
+            this.panelEmployeeFilter.Controls.Add(this.btnFilterEmployeeByName);
+            this.panelEmployeeFilter.Controls.Add(this.btnResetEmployeeFilter);
+            this.panelEmployeeFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelEmployeeFilter.Location = new System.Drawing.Point(20, 20);
+            this.panelEmployeeFilter.Name = "panelEmployeeFilter";
+            this.panelEmployeeFilter.Padding = new System.Windows.Forms.Padding(10);
+            this.panelEmployeeFilter.Size = new System.Drawing.Size(760, 60);
+            this.panelEmployeeFilter.TabIndex = 2;
+            // 
+            // btnFilterEmployeeByName
+            // 
+            this.btnFilterEmployeeByName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btnFilterEmployeeByName.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterEmployeeByName.FlatAppearance.BorderSize = 0;
+            this.btnFilterEmployeeByName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterEmployeeByName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterEmployeeByName.ForeColor = System.Drawing.Color.White;
+            this.btnFilterEmployeeByName.Location = new System.Drawing.Point(15, 15);
+            this.btnFilterEmployeeByName.Name = "btnFilterEmployeeByName";
+            this.btnFilterEmployeeByName.Size = new System.Drawing.Size(160, 32);
+            this.btnFilterEmployeeByName.TabIndex = 0;
+            this.btnFilterEmployeeByName.Text = "📝 Фильтр по имени ▼";
+            this.btnFilterEmployeeByName.UseVisualStyleBackColor = false;
+            // 
+            // btnResetEmployeeFilter
+            // 
+            this.btnResetEmployeeFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.btnResetEmployeeFilter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnResetEmployeeFilter.FlatAppearance.BorderSize = 0;
+            this.btnResetEmployeeFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResetEmployeeFilter.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnResetEmployeeFilter.ForeColor = System.Drawing.Color.White;
+            this.btnResetEmployeeFilter.Location = new System.Drawing.Point(185, 15);
+            this.btnResetEmployeeFilter.Name = "btnResetEmployeeFilter";
+            this.btnResetEmployeeFilter.Size = new System.Drawing.Size(120, 32);
+            this.btnResetEmployeeFilter.TabIndex = 1;
+            this.btnResetEmployeeFilter.Text = "✕ Сбросить";
+            this.btnResetEmployeeFilter.UseVisualStyleBackColor = false;
             // 
             // gridEmployees
             // 
@@ -190,12 +247,12 @@
             this.gridEmployees.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridEmployees.EnableHeadersVisualStyles = false;
             this.gridEmployees.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.gridEmployees.Location = new System.Drawing.Point(20, 20);
+            this.gridEmployees.Location = new System.Drawing.Point(20, 80);
             this.gridEmployees.Name = "gridEmployees";
             this.gridEmployees.ReadOnly = true;
             this.gridEmployees.RowHeadersVisible = false;
             this.gridEmployees.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridEmployees.Size = new System.Drawing.Size(760, 450);
+            this.gridEmployees.Size = new System.Drawing.Size(760, 390);
             this.gridEmployees.TabIndex = 0;
             // 
             // panelEmployeeButtons
@@ -276,6 +333,7 @@
             // 
             this.panelPositions.Controls.Add(this.gridPositions);
             this.panelPositions.Controls.Add(this.panelPositionButtons);
+            this.panelPositions.Controls.Add(this.panelPositionFilter);
             this.panelPositions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPositions.Location = new System.Drawing.Point(0, 0);
             this.panelPositions.Name = "panelPositions";
@@ -283,6 +341,48 @@
             this.panelPositions.Size = new System.Drawing.Size(800, 550);
             this.panelPositions.TabIndex = 1;
             this.panelPositions.Visible = false;
+            // 
+            // panelPositionFilter
+            // 
+            this.panelPositionFilter.BackColor = System.Drawing.Color.White;
+            this.panelPositionFilter.Controls.Add(this.btnFilterPositionByName);
+            this.panelPositionFilter.Controls.Add(this.btnResetPositionFilter);
+            this.panelPositionFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelPositionFilter.Location = new System.Drawing.Point(20, 20);
+            this.panelPositionFilter.Name = "panelPositionFilter";
+            this.panelPositionFilter.Padding = new System.Windows.Forms.Padding(10);
+            this.panelPositionFilter.Size = new System.Drawing.Size(760, 60);
+            this.panelPositionFilter.TabIndex = 2;
+            // 
+            // btnFilterPositionByName
+            // 
+            this.btnFilterPositionByName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btnFilterPositionByName.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterPositionByName.FlatAppearance.BorderSize = 0;
+            this.btnFilterPositionByName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterPositionByName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterPositionByName.ForeColor = System.Drawing.Color.White;
+            this.btnFilterPositionByName.Location = new System.Drawing.Point(15, 15);
+            this.btnFilterPositionByName.Name = "btnFilterPositionByName";
+            this.btnFilterPositionByName.Size = new System.Drawing.Size(160, 32);
+            this.btnFilterPositionByName.TabIndex = 0;
+            this.btnFilterPositionByName.Text = "📝 Фильтр по имени ▼";
+            this.btnFilterPositionByName.UseVisualStyleBackColor = false;
+            // 
+            // btnResetPositionFilter
+            // 
+            this.btnResetPositionFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.btnResetPositionFilter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnResetPositionFilter.FlatAppearance.BorderSize = 0;
+            this.btnResetPositionFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResetPositionFilter.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnResetPositionFilter.ForeColor = System.Drawing.Color.White;
+            this.btnResetPositionFilter.Location = new System.Drawing.Point(185, 15);
+            this.btnResetPositionFilter.Name = "btnResetPositionFilter";
+            this.btnResetPositionFilter.Size = new System.Drawing.Size(120, 32);
+            this.btnResetPositionFilter.TabIndex = 1;
+            this.btnResetPositionFilter.Text = "✕ Сбросить";
+            this.btnResetPositionFilter.UseVisualStyleBackColor = false;
             // 
             // gridPositions
             // 
@@ -297,12 +397,12 @@
             this.gridPositions.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridPositions.EnableHeadersVisualStyles = false;
             this.gridPositions.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.gridPositions.Location = new System.Drawing.Point(20, 20);
+            this.gridPositions.Location = new System.Drawing.Point(20, 80);
             this.gridPositions.Name = "gridPositions";
             this.gridPositions.ReadOnly = true;
             this.gridPositions.RowHeadersVisible = false;
             this.gridPositions.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridPositions.Size = new System.Drawing.Size(760, 450);
+            this.gridPositions.Size = new System.Drawing.Size(760, 390);
             this.gridPositions.TabIndex = 0;
             // 
             // panelPositionButtons
@@ -351,6 +451,7 @@
             // 
             this.panelOrders.Controls.Add(this.gridOrders);
             this.panelOrders.Controls.Add(this.panelOrdersButtons);
+            this.panelOrders.Controls.Add(this.panelOrderFilter);
             this.panelOrders.Controls.Add(this.panelOrdersTop);
             this.panelOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOrders.Location = new System.Drawing.Point(0, 0);
@@ -359,6 +460,80 @@
             this.panelOrders.Size = new System.Drawing.Size(800, 550);
             this.panelOrders.TabIndex = 2;
             this.panelOrders.Visible = false;
+            // 
+            // panelOrderFilter
+            // 
+            this.panelOrderFilter.BackColor = System.Drawing.Color.White;
+            this.panelOrderFilter.Controls.Add(this.btnFilterOrderByDate);
+            this.panelOrderFilter.Controls.Add(this.btnFilterOrderByPrice);
+            this.panelOrderFilter.Controls.Add(this.btnFilterOrderByName);
+            this.panelOrderFilter.Controls.Add(this.btnResetOrderFilter);
+            this.panelOrderFilter.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelOrderFilter.Location = new System.Drawing.Point(20, 70);
+            this.panelOrderFilter.Name = "panelOrderFilter";
+            this.panelOrderFilter.Padding = new System.Windows.Forms.Padding(10);
+            this.panelOrderFilter.Size = new System.Drawing.Size(760, 60);
+            this.panelOrderFilter.TabIndex = 3;
+            // 
+            // btnFilterOrderByName
+            // 
+            this.btnFilterOrderByName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btnFilterOrderByName.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterOrderByName.FlatAppearance.BorderSize = 0;
+            this.btnFilterOrderByName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterOrderByName.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterOrderByName.ForeColor = System.Drawing.Color.White;
+            this.btnFilterOrderByName.Location = new System.Drawing.Point(15, 15);
+            this.btnFilterOrderByName.Name = "btnFilterOrderByName";
+            this.btnFilterOrderByName.Size = new System.Drawing.Size(160, 32);
+            this.btnFilterOrderByName.TabIndex = 0;
+            this.btnFilterOrderByName.Text = "📝 Фильтр по имени ▼";
+            this.btnFilterOrderByName.UseVisualStyleBackColor = false;
+            // 
+            // btnFilterOrderByPrice
+            // 
+            this.btnFilterOrderByPrice.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btnFilterOrderByPrice.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterOrderByPrice.FlatAppearance.BorderSize = 0;
+            this.btnFilterOrderByPrice.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterOrderByPrice.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterOrderByPrice.ForeColor = System.Drawing.Color.White;
+            this.btnFilterOrderByPrice.Location = new System.Drawing.Point(185, 15);
+            this.btnFilterOrderByPrice.Name = "btnFilterOrderByPrice";
+            this.btnFilterOrderByPrice.Size = new System.Drawing.Size(160, 32);
+            this.btnFilterOrderByPrice.TabIndex = 1;
+            this.btnFilterOrderByPrice.Text = "💰 Фильтр по цене ▼";
+            this.btnFilterOrderByPrice.UseVisualStyleBackColor = false;
+            // 
+            // btnFilterOrderByDate
+            // 
+            this.btnFilterOrderByDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btnFilterOrderByDate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterOrderByDate.FlatAppearance.BorderSize = 0;
+            this.btnFilterOrderByDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterOrderByDate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterOrderByDate.ForeColor = System.Drawing.Color.White;
+            this.btnFilterOrderByDate.Location = new System.Drawing.Point(355, 15);
+            this.btnFilterOrderByDate.Name = "btnFilterOrderByDate";
+            this.btnFilterOrderByDate.Size = new System.Drawing.Size(160, 32);
+            this.btnFilterOrderByDate.TabIndex = 3;
+            this.btnFilterOrderByDate.Text = "📅 Фильтр по дате ▼";
+            this.btnFilterOrderByDate.UseVisualStyleBackColor = false;
+            // 
+            // btnResetOrderFilter
+            // 
+            this.btnResetOrderFilter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
+            this.btnResetOrderFilter.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnResetOrderFilter.FlatAppearance.BorderSize = 0;
+            this.btnResetOrderFilter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnResetOrderFilter.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.btnResetOrderFilter.ForeColor = System.Drawing.Color.White;
+            this.btnResetOrderFilter.Location = new System.Drawing.Point(525, 15);
+            this.btnResetOrderFilter.Name = "btnResetOrderFilter";
+            this.btnResetOrderFilter.Size = new System.Drawing.Size(120, 32);
+            this.btnResetOrderFilter.TabIndex = 2;
+            this.btnResetOrderFilter.Text = "✕ Сбросить";
+            this.btnResetOrderFilter.UseVisualStyleBackColor = false;
             // 
             // gridOrders
             // 
@@ -373,12 +548,12 @@
             this.gridOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridOrders.EnableHeadersVisualStyles = false;
             this.gridOrders.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            this.gridOrders.Location = new System.Drawing.Point(20, 70);
+            this.gridOrders.Location = new System.Drawing.Point(20, 130);
             this.gridOrders.Name = "gridOrders";
             this.gridOrders.ReadOnly = true;
             this.gridOrders.RowHeadersVisible = false;
             this.gridOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrders.Size = new System.Drawing.Size(760, 400);
+            this.gridOrders.Size = new System.Drawing.Size(760, 340);
             this.gridOrders.TabIndex = 0;
             // 
             // panelOrdersTop
@@ -446,14 +621,17 @@
             this.panelEmployees.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridEmployees)).EndInit();
             this.panelEmployeeButtons.ResumeLayout(false);
+            this.panelEmployeeFilter.ResumeLayout(false);
             this.panelPositions.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridPositions)).EndInit();
             this.panelPositionButtons.ResumeLayout(false);
+            this.panelPositionFilter.ResumeLayout(false);
             this.panelOrders.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).EndInit();
             this.panelOrdersTop.ResumeLayout(false);
             this.panelOrdersTop.PerformLayout();
             this.panelOrdersButtons.ResumeLayout(false);
+            this.panelOrderFilter.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
@@ -477,12 +655,18 @@
         private System.Windows.Forms.Button btnEditEmployee;
         private System.Windows.Forms.Button btnDeleteEmployee;
         private System.Windows.Forms.Button btnToggleActive;
+        private System.Windows.Forms.Panel panelEmployeeFilter;
+        private System.Windows.Forms.Button btnFilterEmployeeByName;
+        private System.Windows.Forms.Button btnResetEmployeeFilter;
 
         private System.Windows.Forms.Panel panelPositions;
         private System.Windows.Forms.DataGridView gridPositions;
         private System.Windows.Forms.Panel panelPositionButtons;
         private System.Windows.Forms.Button btnAddPosition;
         private System.Windows.Forms.Button btnDeletePosition;
+        private System.Windows.Forms.Panel panelPositionFilter;
+        private System.Windows.Forms.Button btnFilterPositionByName;
+        private System.Windows.Forms.Button btnResetPositionFilter;
 
         private System.Windows.Forms.Panel panelOrders;
         private System.Windows.Forms.DataGridView gridOrders;
@@ -490,5 +674,10 @@
         private System.Windows.Forms.Label lblOrdersTitle;
         private System.Windows.Forms.Panel panelOrdersButtons;
         private System.Windows.Forms.Button btnDeleteOrder;
+        private System.Windows.Forms.Panel panelOrderFilter;
+        private System.Windows.Forms.Button btnFilterOrderByName;
+        private System.Windows.Forms.Button btnFilterOrderByPrice;
+        private System.Windows.Forms.Button btnFilterOrderByDate;
+        private System.Windows.Forms.Button btnResetOrderFilter;
     }
 }
