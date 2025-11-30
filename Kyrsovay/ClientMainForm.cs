@@ -61,6 +61,9 @@ namespace Kyrsovay
             StyleDataGridView();
             gridOrders.DataBindingComplete += GridOrders_DataBindingComplete;
 
+            // Автоматическое создание таблицы Оплаты при первом запуске
+            CreatePaymentTableTool.CreatePaymentTable();
+
             ShowOrdersPanel();
         }
 

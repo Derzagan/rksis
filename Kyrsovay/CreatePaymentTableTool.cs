@@ -43,10 +43,8 @@ END";
                     conn.Open();
                     using (SqlCommand cmd = new SqlCommand(sqlScript, conn))
                     {
-                        object result = cmd.ExecuteScalar();
-                        string message = result?.ToString() ?? "Таблица Оплаты проверена.";
-                        MessageBox.Show(message, "Создание таблицы", 
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cmd.ExecuteNonQuery();
+                        // Таблица создана тихо, без сообщений
                     }
                 }
             }

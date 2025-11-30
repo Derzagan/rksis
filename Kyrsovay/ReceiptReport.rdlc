@@ -3,254 +3,343 @@
   <Body>
     <ReportItems>
       <Textbox Name="txtTitle">
-        <Value>ЧЕК ОБ ОПЛАТЕ</Value>
-        <Style>
-          <FontSize>18pt</FontSize>
-          <FontWeight>Bold</FontWeight>
-          <TextAlign>Center</TextAlign>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>ЧЕК ОБ ОПЛАТЕ</Value>
+                <Style>
+                  <FontSize>18pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
         <Top>0.2in</Top>
         <Left>0.5in</Left>
         <Height>0.4in</Height>
         <Width>7in</Width>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Textbox>
       <Textbox Name="txtCompany">
-        <Value>Сервисный центр "ТехноСервис"</Value>
-        <Style>
-          <FontSize>12pt</FontSize>
-          <TextAlign>Center</TextAlign>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Сервисный центр "ТехноСервис"</Value>
+                <Style>
+                  <FontSize>12pt</FontSize>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
         <Top>0.6in</Top>
         <Left>0.5in</Left>
         <Height>0.3in</Height>
         <Width>7in</Width>
+        <ZIndex>1</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Textbox>
       <Line Name="line1">
-        <Top>1in</Top>
+        <Top>1.01in</Top>
         <Left>0.5in</Left>
-        <Height>0.01in</Height>
+        <Height>0in</Height>
         <Width>7in</Width>
+        <ZIndex>2</ZIndex>
         <Style>
-          <BorderColor>Black</BorderColor>
-          <BorderWidth>1pt</BorderWidth>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
         </Style>
       </Line>
-      <Textbox Name="txtOrderNumber">
-        <Value>Номер заказа: =Fields!OrderNumber.Value</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-        </Style>
-        <Top>1.1in</Top>
-        <Left>0.5in</Left>
-        <Height>0.25in</Height>
-        <Width>3.5in</Width>
-      </Textbox>
-      <Textbox Name="txtPaymentNumber">
-        <Value>Номер оплаты: =Fields!PaymentNumber.Value</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-        </Style>
-        <Top>1.1in</Top>
-        <Left>4in</Left>
-        <Height>0.25in</Height>
-        <Width>3.5in</Width>
-      </Textbox>
-      <Textbox Name="txtClientLabel">
-        <Value>Клиент:</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-          <FontWeight>Bold</FontWeight>
-        </Style>
+      <Textbox Name="txtClient">
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>= "Клиент: " + Fields!ClientName.Value</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
         <Top>1.4in</Top>
         <Left>0.5in</Left>
         <Height>0.25in</Height>
-        <Width>1in</Width>
-      </Textbox>
-      <Textbox Name="txtClientName">
-        <Value>=Fields!ClientName.Value</Value>
+        <Width>7in</Width>
+        <ZIndex>3</ZIndex>
         <Style>
-          <FontSize>10pt</FontSize>
+          <Border>
+            <Style>None</Style>
+          </Border>
         </Style>
-        <Top>1.4in</Top>
-        <Left>1.6in</Left>
-        <Height>0.25in</Height>
-        <Width>6in</Width>
       </Textbox>
-      <Textbox Name="txtMasterLabel">
-        <Value>Мастер:</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-          <FontWeight>Bold</FontWeight>
-        </Style>
+      <Textbox Name="txtMaster">
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>= "Мастер: " + Fields!MasterName.Value</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
         <Top>1.7in</Top>
         <Left>0.5in</Left>
         <Height>0.25in</Height>
-        <Width>1in</Width>
-      </Textbox>
-      <Textbox Name="txtMasterName">
-        <Value>=Fields!MasterName.Value</Value>
+        <Width>7in</Width>
+        <ZIndex>4</ZIndex>
         <Style>
-          <FontSize>10pt</FontSize>
+          <Border>
+            <Style>None</Style>
+          </Border>
         </Style>
-        <Top>1.7in</Top>
-        <Left>1.6in</Left>
-        <Height>0.25in</Height>
-        <Width>6in</Width>
-      </Textbox>
-      <Textbox Name="txtDeviceLabel">
-        <Value>Устройство:</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-          <FontWeight>Bold</FontWeight>
-        </Style>
-        <Top>2in</Top>
-        <Left>0.5in</Left>
-        <Height>0.25in</Height>
-        <Width>1in</Width>
       </Textbox>
       <Textbox Name="txtDevice">
-        <Value>=Fields!Device.Value</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>= "Устройство: " + Fields!Device.Value</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
         <Top>2in</Top>
-        <Left>1.6in</Left>
-        <Height>0.25in</Height>
-        <Width>6in</Width>
-      </Textbox>
-      <Textbox Name="txtIssueLabel">
-        <Value>Описание проблемы:</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-          <FontWeight>Bold</FontWeight>
-        </Style>
-        <Top>2.3in</Top>
         <Left>0.5in</Left>
         <Height>0.25in</Height>
-        <Width>1.5in</Width>
+        <Width>7in</Width>
+        <ZIndex>5</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Textbox>
       <Textbox Name="txtIssue">
-        <Value>=Fields!Issue.Value</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>= "Описание: " + Fields!Issue.Value</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
         <Top>2.3in</Top>
-        <Left>2.1in</Left>
+        <Left>0.5in</Left>
         <Height>0.5in</Height>
-        <Width>5.5in</Width>
+        <Width>7in</Width>
+        <ZIndex>6</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Textbox>
       <Line Name="line2">
         <Top>2.9in</Top>
         <Left>0.5in</Left>
         <Height>0.01in</Height>
         <Width>7in</Width>
+        <ZIndex>7</ZIndex>
         <Style>
-          <BorderColor>Black</BorderColor>
-          <BorderWidth>1pt</BorderWidth>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
         </Style>
       </Line>
       <Textbox Name="txtPriceLabel">
-        <Value>ИТОГО К ОПЛАТЕ:</Value>
-        <Style>
-          <FontSize>14pt</FontSize>
-          <FontWeight>Bold</FontWeight>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>ИТОГО К ОПЛАТЕ:</Value>
+                <Style>
+                  <FontSize>14pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
         <Top>3.1in</Top>
         <Left>0.5in</Left>
         <Height>0.4in</Height>
         <Width>4in</Width>
+        <ZIndex>8</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Textbox>
       <Textbox Name="txtPrice">
-        <Value>=Format(Fields!Price.Value, "N0") &amp; " ₸"</Value>
-        <Style>
-          <FontSize>16pt</FontSize>
-          <FontWeight>Bold</FontWeight>
-          <TextAlign>Right</TextAlign>
-          <Color>#FF0000</Color>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>= Format(Fields!Price.Value, "N0") + " ₸"</Value>
+                <Style>
+                  <FontSize>16pt</FontSize>
+                  <FontWeight>Bold</FontWeight>
+                  <Color>Red</Color>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Right</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
         <Top>3.1in</Top>
         <Left>4.5in</Left>
         <Height>0.4in</Height>
         <Width>3in</Width>
-      </Textbox>
-      <Textbox Name="txtPaymentMethodLabel">
-        <Value>Способ оплаты:</Value>
+        <ZIndex>9</ZIndex>
         <Style>
-          <FontSize>10pt</FontSize>
-          <FontWeight>Bold</FontWeight>
+          <Border>
+            <Style>None</Style>
+          </Border>
         </Style>
-        <Top>3.6in</Top>
-        <Left>0.5in</Left>
-        <Height>0.25in</Height>
-        <Width>1.5in</Width>
       </Textbox>
       <Textbox Name="txtPaymentMethod">
-        <Value>=Fields!PaymentMethod.Value</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>= "Способ оплаты: " + Fields!PaymentMethod.Value</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
         <Top>3.6in</Top>
-        <Left>2.1in</Left>
-        <Height>0.25in</Height>
-        <Width>5.5in</Width>
-      </Textbox>
-      <Textbox Name="txtPaymentDateLabel">
-        <Value>Дата и время оплаты:</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-          <FontWeight>Bold</FontWeight>
-        </Style>
-        <Top>3.9in</Top>
         <Left>0.5in</Left>
         <Height>0.25in</Height>
-        <Width>2in</Width>
+        <Width>7in</Width>
+        <ZIndex>10</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Textbox>
       <Textbox Name="txtPaymentDate">
-        <Value>=Format(Fields!PaymentDate.Value, "dd.MM.yyyy HH:mm")</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>= "Дата и время оплаты: " + Format(Fields!PaymentDate.Value, "dd.MM.yyyy HH:mm")</Value>
+                <Style />
+              </TextRun>
+            </TextRuns>
+            <Style />
+          </Paragraph>
+        </Paragraphs>
         <Top>3.9in</Top>
-        <Left>2.6in</Left>
+        <Left>0.5in</Left>
         <Height>0.25in</Height>
-        <Width>5in</Width>
+        <Width>7in</Width>
+        <ZIndex>11</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Textbox>
       <Line Name="line3">
-        <Top>4.3in</Top>
-        <Left>0.5in</Left>
-        <Height>0.01in</Height>
-        <Width>7in</Width>
+        <Top>4.31in</Top>
+        <Left>0.25in</Left>
+        <Height>0in</Height>
+        <Width>7.25in</Width>
+        <ZIndex>12</ZIndex>
         <Style>
-          <BorderColor>Black</BorderColor>
-          <BorderWidth>1pt</BorderWidth>
+          <Border>
+            <Style>Solid</Style>
+          </Border>
         </Style>
       </Line>
       <Textbox Name="txtFooter">
-        <Value>Спасибо за ваш выбор!</Value>
-        <Style>
-          <FontSize>10pt</FontSize>
-          <TextAlign>Center</TextAlign>
-          <FontStyle>Italic</FontStyle>
-        </Style>
+        <CanGrow>true</CanGrow>
+        <Paragraphs>
+          <Paragraph>
+            <TextRuns>
+              <TextRun>
+                <Value>Спасибо за ваш выбор!</Value>
+                <Style>
+                  <FontStyle>Italic</FontStyle>
+                </Style>
+              </TextRun>
+            </TextRuns>
+            <Style>
+              <TextAlign>Center</TextAlign>
+            </Style>
+          </Paragraph>
+        </Paragraphs>
         <Top>4.5in</Top>
         <Left>0.5in</Left>
         <Height>0.3in</Height>
         <Width>7in</Width>
+        <ZIndex>13</ZIndex>
+        <Style>
+          <Border>
+            <Style>None</Style>
+          </Border>
+        </Style>
       </Textbox>
     </ReportItems>
     <Height>5in</Height>
-    <Style />
+    <Style>
+      <Border>
+        <Style>None</Style>
+      </Border>
+    </Style>
   </Body>
   <Width>8in</Width>
   <Page>
-    <PageHeight>11in</PageHeight>
-    <PageWidth>8.5in</PageWidth>
     <LeftMargin>1in</LeftMargin>
     <RightMargin>1in</RightMargin>
     <TopMargin>1in</TopMargin>
     <BottomMargin>1in</BottomMargin>
-    <ColumnSpacing>0.5in</ColumnSpacing>
+    <Style />
   </Page>
+  <AutoRefresh>0</AutoRefresh>
   <DataSources>
     <DataSource Name="ReceiptDataSource">
       <ConnectionProperties>
@@ -306,5 +395,6 @@
       </Fields>
     </DataSet>
   </DataSets>
+  <rd:ReportUnitType>Inch</rd:ReportUnitType>
+  <rd:ReportID>225f6a86-1342-44c1-a379-017e616f0d6b</rd:ReportID>
 </Report>
-

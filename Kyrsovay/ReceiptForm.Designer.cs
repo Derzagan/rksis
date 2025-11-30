@@ -28,6 +28,8 @@ namespace Kyrsovay
             this.reportViewer1.LocalReport.ReportEmbeddedResource = "Kyrsovay.ReceiptReport.rdlc";
             this.reportViewer1.Location = new System.Drawing.Point(0, 0);
             this.reportViewer1.Name = "reportViewer1";
+            this.reportViewer1.ShowParameterPrompts = false;
+            this.reportViewer1.ShowPromptAreaButton = false;
             this.reportViewer1.ServerReport.BearerToken = null;
             this.reportViewer1.Size = new System.Drawing.Size(800, 600);
             this.reportViewer1.TabIndex = 0;

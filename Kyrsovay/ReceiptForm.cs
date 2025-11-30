@@ -20,8 +20,25 @@ namespace Kyrsovay
 
         private void ReceiptForm_Load(object sender, EventArgs e)
         {
-            LoadReceiptData();
-            reportViewer1.RefreshReport();
+            try
+            {
+                // Настройка ReportViewer для локального режима
+                reportViewer1.ProcessingMode = ProcessingMode.Local;
+                reportViewer1.LocalReport.ReportEmbeddedResource = "Kyrsovay.ReceiptReport.rdlc";
+                reportViewer1.ShowParameterPrompts = false;
+                reportViewer1.ShowPromptAreaButton = false;
+                
+                // Загружаем данные перед обновлением отчета
+                LoadReceiptData();
+                
+                // Обновляем отчет только после загрузки данных
+                reportViewer1.RefreshReport();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка загрузки отчета:\n" + ex.Message + "\n\n" + ex.StackTrace, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void LoadReceiptData()
