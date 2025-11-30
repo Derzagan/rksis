@@ -32,6 +32,9 @@ namespace Kyrsovay
             btnAddPosition.Click += BtnAddPosition_Click;
             btnDeletePosition.Click += BtnDeletePosition_Click;
 
+            // События управления заказами
+            btnDeleteOrder.Click += BtnDeleteOrder_Click;
+
             // Стилизация DataGridView
             StyleDataGridView(gridEmployees);
             StyleDataGridView(gridPositions);
@@ -135,7 +138,7 @@ namespace Kyrsovay
                             s.ФИО AS [ФИО],
                             s.Телефон AS [Телефон],
                             s.Логин AS [Логин],
-                            d.Название_должности AS [Должность],
+                            d.Наименование AS [Должность],
                             CASE WHEN s.Активен = 1 THEN 'Да' ELSE 'Нет' END AS [Активен]
                         FROM Сотрудники s
                         JOIN Должности d ON s.Код_должности = d.Код_должности
@@ -170,9 +173,9 @@ namespace Kyrsovay
                     string sql = @"
                         SELECT 
                             Код_должности AS [№],
-                            Название_должности AS [Название должности]
+                            Наименование AS [Название должности]
                         FROM Должности
-                        ORDER BY Название_должности";
+                        ORDER BY Наименование";
 
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                     DataTable table = new DataTable();
@@ -354,7 +357,7 @@ namespace Kyrsovay
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Open();
-                    string sql = "INSERT INTO Должности (Название_должности) VALUES (@name)";
+                    string sql = "INSERT INTO Должности (Наименование) VALUES (@name)";
                     SqlCommand cmd = new SqlCommand(sql, conn);
                     cmd.Parameters.AddWithValue("@name", positionName.Trim());
                     cmd.ExecuteNonQuery();
@@ -410,6 +413,51 @@ namespace Kyrsovay
                 catch (Exception ex)
                 {
                     MessageBox.Show("Ошибка удаления должности: " + ex.Message + "\n\nВозможно, эта должность используется сотрудниками.", "Ошибка",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        // ========== УПРАВЛЕНИЕ ЗАКАЗАМИ ==========
+        private void BtnDeleteOrder_Click(object sender, EventArgs e)
+        {
+            if (gridOrders.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Выберите заказ для удаления!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            int orderId = Convert.ToInt32(gridOrders.SelectedRows[0].Cells["№"].Value);
+            string clientName = gridOrders.SelectedRows[0].Cells["Клиент"].Value.ToString();
+
+            DialogResult confirm = MessageBox.Show(
+                $"Вы действительно хотите удалить заказ №{orderId} от клиента '{clientName}'?\n\nЭто действие нельзя отменить!",
+                "⚠ Подтверждение удаления",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning,
+                MessageBoxDefaultButton.Button2);
+
+            if (confirm == DialogResult.Yes)
+            {
+                try
+                {
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        conn.Open();
+                        string sql = "DELETE FROM Заказы WHERE Код_заказа = @id";
+                        SqlCommand cmd = new SqlCommand(sql, conn);
+                        cmd.Parameters.AddWithValue("@id", orderId);
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("✓ Заказ успешно удалён!", "Успех",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadOrders();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка удаления заказа: " + ex.Message, "Ошибка",
                         MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -525,12 +573,12 @@ namespace Kyrsovay
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Open();
-                    string sql = "SELECT Код_должности, Название_должности FROM Должности ORDER BY Название_должности";
+                    string sql = "SELECT Код_должности, Наименование FROM Должности ORDER BY Наименование";
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                     DataTable table = new DataTable();
                     da.Fill(table);
 
-                    cmbPosition.DisplayMember = "Название_должности";
+                    cmbPosition.DisplayMember = "Наименование";
                     cmbPosition.ValueMember = "Код_должности";
                     cmbPosition.DataSource = table;
                 }

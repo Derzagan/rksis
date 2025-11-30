@@ -39,6 +39,8 @@
             this.gridOrders = new System.Windows.Forms.DataGridView();
             this.panelOrdersTop = new System.Windows.Forms.Panel();
             this.lblOrdersTitle = new System.Windows.Forms.Label();
+            this.panelOrdersButtons = new System.Windows.Forms.Panel();
+            this.btnDeleteOrder = new System.Windows.Forms.Button();
             this.panelHeader.SuspendLayout();
             this.panelMenu.SuspendLayout();
             this.panelContent.SuspendLayout();
@@ -51,6 +53,7 @@
             this.panelOrders.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).BeginInit();
             this.panelOrdersTop.SuspendLayout();
+            this.panelOrdersButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelHeader
@@ -347,6 +350,7 @@
             // panelOrders
             // 
             this.panelOrders.Controls.Add(this.gridOrders);
+            this.panelOrders.Controls.Add(this.panelOrdersButtons);
             this.panelOrders.Controls.Add(this.panelOrdersTop);
             this.panelOrders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelOrders.Location = new System.Drawing.Point(0, 0);
@@ -374,7 +378,7 @@
             this.gridOrders.ReadOnly = true;
             this.gridOrders.RowHeadersVisible = false;
             this.gridOrders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.gridOrders.Size = new System.Drawing.Size(760, 460);
+            this.gridOrders.Size = new System.Drawing.Size(760, 400);
             this.gridOrders.TabIndex = 0;
             // 
             // panelOrdersTop
@@ -396,7 +400,33 @@
             this.lblOrdersTitle.Name = "lblOrdersTitle";
             this.lblOrdersTitle.Size = new System.Drawing.Size(267, 21);
             this.lblOrdersTitle.TabIndex = 0;
-            this.lblOrdersTitle.Text = "📋 Все заказы (только просмотр)";
+            this.lblOrdersTitle.Text = "📋 Все заказы";
+            // 
+            // panelOrdersButtons
+            // 
+            this.panelOrdersButtons.BackColor = System.Drawing.Color.White;
+            this.panelOrdersButtons.Controls.Add(this.btnDeleteOrder);
+            this.panelOrdersButtons.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.panelOrdersButtons.Location = new System.Drawing.Point(20, 470);
+            this.panelOrdersButtons.Name = "panelOrdersButtons";
+            this.panelOrdersButtons.Padding = new System.Windows.Forms.Padding(10);
+            this.panelOrdersButtons.Size = new System.Drawing.Size(760, 60);
+            this.panelOrdersButtons.TabIndex = 2;
+            // 
+            // btnDeleteOrder
+            // 
+            this.btnDeleteOrder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(53)))), ((int)(((byte)(69)))));
+            this.btnDeleteOrder.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnDeleteOrder.FlatAppearance.BorderSize = 0;
+            this.btnDeleteOrder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnDeleteOrder.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnDeleteOrder.ForeColor = System.Drawing.Color.White;
+            this.btnDeleteOrder.Location = new System.Drawing.Point(15, 15);
+            this.btnDeleteOrder.Name = "btnDeleteOrder";
+            this.btnDeleteOrder.Size = new System.Drawing.Size(160, 32);
+            this.btnDeleteOrder.TabIndex = 0;
+            this.btnDeleteOrder.Text = "🗑 Удалить заказ";
+            this.btnDeleteOrder.UseVisualStyleBackColor = false;
             // 
             // AdminMainForm
             // 
@@ -423,6 +453,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridOrders)).EndInit();
             this.panelOrdersTop.ResumeLayout(false);
             this.panelOrdersTop.PerformLayout();
+            this.panelOrdersButtons.ResumeLayout(false);
             this.ResumeLayout(false);
         }
 
@@ -457,5 +488,7 @@
         private System.Windows.Forms.DataGridView gridOrders;
         private System.Windows.Forms.Panel panelOrdersTop;
         private System.Windows.Forms.Label lblOrdersTitle;
+        private System.Windows.Forms.Panel panelOrdersButtons;
+        private System.Windows.Forms.Button btnDeleteOrder;
     }
 }
