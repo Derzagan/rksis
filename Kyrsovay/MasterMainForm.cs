@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace Kyrsovay
@@ -9,270 +10,409 @@ namespace Kyrsovay
     {
         private int _employeeId;
         private string _connectionString = Properties.Settings.Default.service_centerIsaConnectionString;
-
         private int _selectedOrderId = -1;
+        private string _masterName = "";
 
         public MasterMainForm(int employeeId)
         {
             InitializeComponent();
-
             _employeeId = employeeId;
 
-            // --- Привязка событий ---
+            // Загрузка имени мастера
+            LoadMasterName();
+            lblWelcome.Text = $"Панель мастера — {_masterName}";
+
+            // События меню
             btnMyOrders.Click += BtnMyOrders_Click;
-            btnInProgress.Click += BtnInProgress_Click;
-            btnLogout.Click += BtnLogout_Click;
             btnLogout2.Click += BtnLogout2_Click;
 
-            btnOpenOrder.Click += BtnOpenOrder_Click;
+            // События фильтров
+            btnFilterByName.Click += BtnFilterByName_Click;
+            btnFilterByPrice.Click += BtnFilterByPrice_Click;
+            btnResetFilters.Click += BtnResetFilters_Click;
+
+            // События работы с заявками
+            gridOrders.CellDoubleClick += GridOrders_CellDoubleClick;
+            btnBackFromDetails.Click += BtnBackFromDetails_Click;
+
+            // События работы с ремонтом
             btnStartWork.Click += BtnStartWork_Click;
             btnNeedParts.Click += BtnNeedParts_Click;
             btnFinishRepair.Click += BtnFinishRepair_Click;
 
-            // Центрирование
-            this.Resize += MasterMainForm_Resize;
+            // Форматирование DataGridView
+            gridOrders.DataBindingComplete += GridOrders_DataBindingComplete;
 
+            // Стилизация
+            StyleDataGridView();
+
+            // Показываем заявки
             LoadMyOrders();
             ShowPanel(panelOrders);
         }
 
-        // ======================================================
-        // Центрирование панелей
-        // ======================================================
-        private void MasterMainForm_Resize(object sender, EventArgs e)
+        // ========== ЗАГРУЗКА ИМЕНИ МАСТЕРА ==========
+        private void LoadMasterName()
         {
-            Center(panelOrdersCenter);
-            Center(panelDetailCenter);
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    string sql = "SELECT ФИО FROM Сотрудники WHERE Код_сотрудника = @id";
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@id", _employeeId);
+                    object result = cmd.ExecuteScalar();
+                    _masterName = result?.ToString() ?? "Мастер";
+                }
+            }
+            catch
+            {
+                _masterName = "Мастер";
+            }
         }
 
-        private void Center(Control c)
+        // ========== СТИЛИЗАЦИЯ DATAGRIDVIEW ==========
+        private void StyleDataGridView()
         {
-            if (c == null) return;
+            gridOrders.DefaultCellStyle.Font = new Font("Segoe UI", 10F);
+            gridOrders.DefaultCellStyle.Padding = new Padding(5);
+            gridOrders.DefaultCellStyle.SelectionBackColor = Color.FromArgb(0, 122, 204);
+            gridOrders.DefaultCellStyle.SelectionForeColor = Color.White;
 
-            c.Left = (panelContent.Width - c.Width) / 2;
-            c.Top = (panelContent.Height - c.Height) / 2;
+            gridOrders.ColumnHeadersDefaultCellStyle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            gridOrders.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(45, 45, 45);
+            gridOrders.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            gridOrders.ColumnHeadersDefaultCellStyle.Padding = new Padding(5);
+            gridOrders.ColumnHeadersHeight = 40;
+
+            gridOrders.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(248, 248, 248);
+            gridOrders.RowTemplate.Height = 35;
         }
 
-        private void ShowPanel(Panel p)
+        // ========== ФОРМАТИРОВАНИЕ КОЛОНОК ==========
+        private void GridOrders_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
+        {
+            try
+            {
+                if (gridOrders.Columns == null || gridOrders.Columns.Count == 0)
+                    return;
+
+                for (int i = 0; i < gridOrders.Columns.Count; i++)
+                {
+                    DataGridViewColumn col = gridOrders.Columns[i];
+                    if (col == null) continue;
+
+                    string header = col.HeaderText ?? "";
+
+                    if (header == "№")
+                        col.Width = 50;
+                    else if (header == "Дата")
+                    {
+                        col.Width = 110;
+                        col.DefaultCellStyle.Format = "dd.MM.yyyy";
+                    }
+                    else if (header == "Клиент")
+                        col.Width = 150;
+                    else if (header == "Устройство")
+                        col.Width = 120;
+                    else if (header == "Цена")
+                    {
+                        col.Width = 90;
+                        col.DefaultCellStyle.Format = "N0";
+                        col.DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+                    }
+                    else if (header == "Статус")
+                        col.Width = 140;
+                }
+            }
+            catch { }
+        }
+
+        // ========== УПРАВЛЕНИЕ ПАНЕЛЯМИ ==========
+        private void ShowPanel(Panel panel)
         {
             panelOrders.Visible = false;
             panelOrderDetails.Visible = false;
 
-            p.Visible = true;
+            panel.Visible = true;
 
-            Center(panelOrdersCenter);
-            Center(panelDetailCenter);
+            btnMyOrders.BackColor = Color.FromArgb(0, 122, 204);
+            btnMyOrders.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
         }
 
-        // ======================================================
-        // Загрузка заявок мастера
-        // ======================================================
-        private void LoadMyOrders()
+        // ========== ЗАГРУЗКА СВОИХ ЗАЯВОК ==========
+        private void LoadMyOrders(string orderBy = "z.Дата_заказа DESC")
         {
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            try
             {
-                conn.Open();
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
 
-                string sql = @"
-                    SELECT 
-                        Код_заказа,
-                        Дата_заказа,
-                        Серийный_номер,
-                        Описание,
-                        Цена,
-                        Статус
-                    FROM Заказы
-                    WHERE Код_сотрудника = @id
-                    ORDER BY Дата_заказа DESC";
+                    string sql = $@"
+                        SELECT 
+                            z.Код_заказа AS [№],
+                            z.Дата_заказа AS [Дата],
+                            c.ФИО AS [Клиент],
+                            z.Серийный_номер AS [Устройство],
+                            z.Цена AS [Цена],
+                            z.Статус AS [Статус]
+                        FROM Заказы z
+                        JOIN Клиенты c ON z.Код_клиента = c.Код_клиента
+                        WHERE z.Код_сотрудника = @employeeId
+                        ORDER BY {orderBy}";
 
-                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-                da.SelectCommand.Parameters.AddWithValue("@id", _employeeId);
+                    SqlDataAdapter da = new SqlDataAdapter(sql, conn);
+                    da.SelectCommand.Parameters.AddWithValue("@employeeId", _employeeId);
 
-                DataTable dt = new DataTable();
-                da.Fill(dt);
+                    DataTable table = new DataTable();
+                    da.Fill(table);
 
-                gridOrders.DataSource = dt;
+                    gridOrders.DataSource = table;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка загрузки заявок: " + ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ======================================================
-        // Загрузка заявок "в работе"
-        // ======================================================
-        private void LoadOrdersInProgress()
+        // ========== КНОПКИ ФИЛЬТРОВ ==========
+        private void BtnFilterByName_Click(object sender, EventArgs e)
         {
-            using (SqlConnection conn = new SqlConnection(_connectionString))
-            {
-                conn.Open();
+            ContextMenuStrip menu = new ContextMenuStrip();
 
-                string sql = @"
-                    SELECT 
-                        Код_заказа,
-                        Дата_заказа,
-                        Серийный_номер,
-                        Описание,
-                        Цена,
-                        Статус
-                    FROM Заказы
-                    WHERE Код_сотрудника = @id
-                    AND Статус = N'В работе'
-                    ORDER BY Дата_заказа DESC";
+            ToolStripMenuItem itemAZ = new ToolStripMenuItem("А → Я (клиенты по возрастанию)");
+            itemAZ.Click += (s, ev) => LoadMyOrders("c.ФИО ASC");
+            menu.Items.Add(itemAZ);
 
-                SqlDataAdapter da = new SqlDataAdapter(sql, conn);
-                da.SelectCommand.Parameters.AddWithValue("@id", _employeeId);
+            ToolStripMenuItem itemZA = new ToolStripMenuItem("Я → А (клиенты по убыванию)");
+            itemZA.Click += (s, ev) => LoadMyOrders("c.ФИО DESC");
+            menu.Items.Add(itemZA);
 
-                DataTable dt = new DataTable();
-                da.Fill(dt);
-
-                gridOrders.DataSource = dt;
-            }
+            menu.Show(btnFilterByName, new Point(0, btnFilterByName.Height));
         }
 
-        // ======================================================
-        // Обработчики кнопок меню
-        // ======================================================
+        private void BtnFilterByPrice_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem itemDesc = new ToolStripMenuItem("Самые дорогие (по убыванию)");
+            itemDesc.Click += (s, ev) => LoadMyOrders("z.Цена DESC");
+            menu.Items.Add(itemDesc);
+
+            ToolStripMenuItem itemAsc = new ToolStripMenuItem("Самые дешёвые (по возрастанию)");
+            itemAsc.Click += (s, ev) => LoadMyOrders("z.Цена ASC");
+            menu.Items.Add(itemAsc);
+
+            menu.Show(btnFilterByPrice, new Point(0, btnFilterByPrice.Height));
+        }
+
+        private void BtnResetFilters_Click(object sender, EventArgs e)
+        {
+            LoadMyOrders();
+        }
+
+        // ========== КНОПКИ МЕНЮ ==========
         private void BtnMyOrders_Click(object sender, EventArgs e)
         {
             LoadMyOrders();
             ShowPanel(panelOrders);
         }
 
-        private void BtnInProgress_Click(object sender, EventArgs e)
-        {
-            LoadOrdersInProgress();
-            ShowPanel(panelOrders);
-        }
-
-        private void BtnLogout_Click(object sender, EventArgs e)
-        {
-            new LoginForm().Show();
-            this.Close();
-        }
-
         private void BtnLogout2_Click(object sender, EventArgs e)
         {
-            new LoginForm().Show();
+            LoginForm login = new LoginForm();
+            login.Show();
             this.Close();
         }
 
-        // ======================================================
-        // Открыть заявку
-        // ======================================================
-        private void BtnOpenOrder_Click(object sender, EventArgs e)
+        // ========== ОТКРЫТИЕ ДЕТАЛЕЙ ПО ДВОЙНОМУ КЛИКУ ==========
+        private void GridOrders_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (gridOrders.SelectedRows.Count == 0)
-            {
-                MessageBox.Show("Выберите заявку!");
-                return;
-            }
+            if (e.RowIndex < 0) return;
 
-            _selectedOrderId = Convert.ToInt32(
-                gridOrders.SelectedRows[0].Cells["Код_заказа"].Value
-            );
-
+            _selectedOrderId = Convert.ToInt32(gridOrders.Rows[e.RowIndex].Cells["№"].Value);
             LoadOrderDetails(_selectedOrderId);
             ShowPanel(panelOrderDetails);
         }
 
-        // ======================================================
-        // Детали заявки
-        // ======================================================
+        // ========== ЗАГРУЗКА ДЕТАЛЕЙ ЗАЯВКИ ==========
         private void LoadOrderDetails(int orderId)
         {
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            try
             {
-                conn.Open();
-
-                string sql = @"
-                    SELECT 
-                        z.Описание,
-                        z.Цена,
-                        z.Статус,
-                        z.Серийный_номер,
-                        c.ФИО AS Клиент
-                    FROM Заказы z
-                    JOIN Клиенты c
-                        ON z.Код_клиента = c.Код_клиента
-                    WHERE Код_заказа = @id";
-
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@id", orderId);
-
-                SqlDataReader rd = cmd.ExecuteReader();
-
-                if (rd.Read())
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    lblClientName.Text = "Клиент: " + rd["Клиент"].ToString();
-                    lblDeviceInfo.Text = "Устройство: " + rd["Серийный_номер"].ToString();
-                    lblStatus.Text = "Статус: " + rd["Статус"].ToString();
+                    conn.Open();
 
-                    txtWorkComment.Text = rd["Описание"].ToString();
-                    txtRepairPrice.Text = rd["Цена"].ToString();
+                    string sql = @"
+                        SELECT 
+                            z.Код_заказа,
+                            z.Описание,
+                            z.Цена,
+                            z.Статус,
+                            z.Серийный_номер,
+                            c.ФИО AS Клиент
+                        FROM Заказы z
+                        JOIN Клиенты c ON z.Код_клиента = c.Код_клиента
+                        WHERE z.Код_заказа = @id";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@id", orderId);
+
+                    SqlDataReader rd = cmd.ExecuteReader();
+
+                    if (rd.Read())
+                    {
+                        lblDetailClient.Text = "👤 Клиент: " + rd["Клиент"].ToString();
+                        lblDetailDevice.Text = "📱 Устройство: " + rd["Серийный_номер"].ToString();
+                        lblDetailStatus.Text = "📊 Статус: " + rd["Статус"].ToString();
+                        lblDetailPrice.Text = "💰 Стоимость: " + Convert.ToInt32(rd["Цена"]).ToString("N0") + " ₸";
+                        txtDetailComment.Text = rd["Описание"].ToString();
+                        txtFinalPrice.Text = rd["Цена"].ToString();
+                        txtWorkComment.Clear(); // Очищаем для нового комментария
+                    }
+                    rd.Close();
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка загрузки деталей: " + ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        // ======================================================
-        // Изменение статусов
-        // ======================================================
+        // ========== НАЧАТЬ РАБОТУ ==========
         private void BtnStartWork_Click(object sender, EventArgs e)
         {
-            UpdateStatus("В работе");
+            UpdateOrderStatus("В работе");
         }
 
+        // ========== ОЖИДАНИЕ ЗАПЧАСТЕЙ ==========
         private void BtnNeedParts_Click(object sender, EventArgs e)
         {
-            UpdateStatus("Ожидание запчастей");
+            UpdateOrderStatus("Ожидание запчастей");
         }
 
+        // ========== ЗАВЕРШИТЬ РЕМОНТ ==========
         private void BtnFinishRepair_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtRepairPrice.Text))
+            if (_selectedOrderId == -1) return;
+
+            // Проверка итоговой цены
+            if (string.IsNullOrWhiteSpace(txtFinalPrice.Text))
             {
-                MessageBox.Show("Введите итоговую цену!");
+                MessageBox.Show("Введите итоговую стоимость ремонта!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtFinalPrice.Focus();
                 return;
             }
 
-            UpdateStatus("Готово", txtRepairPrice.Text);
+            decimal finalPrice;
+            if (!decimal.TryParse(txtFinalPrice.Text, out finalPrice) || finalPrice < 0)
+            {
+                MessageBox.Show("Введите корректную цену!", "Внимание",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtFinalPrice.Focus();
+                return;
+            }
+
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+
+                    // Обновляем описание - добавляем комментарий мастера
+                    string workComment = txtWorkComment.Text.Trim();
+                    string updatedDescription = "";
+                    
+                    if (!string.IsNullOrWhiteSpace(workComment))
+                    {
+                        // Получаем старое описание
+                        string sqlGet = "SELECT Описание FROM Заказы WHERE Код_заказа = @id";
+                        SqlCommand cmdGet = new SqlCommand(sqlGet, conn);
+                        cmdGet.Parameters.AddWithValue("@id", _selectedOrderId);
+                        object oldDesc = cmdGet.ExecuteScalar();
+                        
+                        updatedDescription = oldDesc?.ToString() ?? "";
+                        updatedDescription += "\n\n--- Комментарий мастера ---\n" + workComment;
+                    }
+
+                    string sql = @"
+                        UPDATE Заказы
+                        SET Статус = N'Готово', 
+                            Цена = @price" +
+                            (string.IsNullOrWhiteSpace(workComment) ? "" : ", Описание = @description") +
+                        " WHERE Код_заказа = @id";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@price", finalPrice);
+                    cmd.Parameters.AddWithValue("@id", _selectedOrderId);
+                    
+                    if (!string.IsNullOrWhiteSpace(workComment))
+                        cmd.Parameters.AddWithValue("@description", updatedDescription);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                MessageBox.Show("✓ Ремонт завершён! Заказ готов к выдаче.", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                LoadOrderDetails(_selectedOrderId);
+                LoadMyOrders();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка завершения ремонта: " + ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void UpdateStatus(string newStatus, string price = null)
+        // ========== ОБНОВЛЕНИЕ СТАТУСА ==========
+        private void UpdateOrderStatus(string status)
         {
-            if (_selectedOrderId == -1)
-                return;
+            if (_selectedOrderId == -1) return;
 
-            using (SqlConnection conn = new SqlConnection(_connectionString))
+            try
             {
-                conn.Open();
-
-                string sql;
-
-                if (price == null)
+                using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    sql = @"UPDATE Заказы 
-                            SET Статус=@s 
-                            WHERE Код_заказа=@id";
+                    conn.Open();
+
+                    string sql = @"
+                        UPDATE Заказы
+                        SET Статус = @status
+                        WHERE Код_заказа = @id";
+
+                    SqlCommand cmd = new SqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@status", status);
+                    cmd.Parameters.AddWithValue("@id", _selectedOrderId);
+
+                    cmd.ExecuteNonQuery();
                 }
-                else
-                {
-                    sql = @"UPDATE Заказы 
-                            SET Статус=@s, Цена=@p 
-                            WHERE Код_заказа=@id";
-                }
 
-                SqlCommand cmd = new SqlCommand(sql, conn);
-                cmd.Parameters.AddWithValue("@s", newStatus);
-                cmd.Parameters.AddWithValue("@id", _selectedOrderId);
+                MessageBox.Show($"✓ Статус изменён на '{status}'", "Успех",
+                    MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                if (price != null)
-                    cmd.Parameters.AddWithValue("@p", price);
-
-                cmd.ExecuteNonQuery();
+                LoadOrderDetails(_selectedOrderId);
+                LoadMyOrders();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка обновления статуса: " + ex.Message, "Ошибка",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-            MessageBox.Show("Статус обновлён!");
-
-            LoadOrderDetails(_selectedOrderId);
+        // ========== НАВИГАЦИЯ НАЗАД ==========
+        private void BtnBackFromDetails_Click(object sender, EventArgs e)
+        {
             LoadMyOrders();
+            ShowPanel(panelOrders);
         }
     }
 }
