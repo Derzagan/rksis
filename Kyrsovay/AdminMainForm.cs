@@ -156,6 +156,7 @@ namespace Kyrsovay
                             CASE WHEN s.Активен = 1 THEN 'Да' ELSE 'Нет' END AS [Активен]
                         FROM Сотрудники s
                         JOIN Должности d ON s.Код_должности = d.Код_должности
+                        WHERE s.Код_должности != 3
                         ORDER BY {orderBy}";
 
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
@@ -176,7 +177,7 @@ namespace Kyrsovay
             }
         }
 
-        private void LoadPositions(string orderBy = "Наименование ASC")
+        private void LoadPositions(string orderBy = "Код_должности ASC")
         {
             try
             {
@@ -184,12 +185,32 @@ namespace Kyrsovay
                 {
                     conn.Open();
 
-                    string sql = $@"
-                        SELECT 
-                            Код_должности AS [№],
-                            Наименование AS [Название должности]
-                        FROM Должности
-                        ORDER BY {orderBy}";
+                    string sql;
+                    
+                    // Если сортировка по имени, сначала нумеруем по Код_должности, потом сортируем по имени
+                    if (orderBy.Contains("Наименование"))
+                    {
+                        sql = $@"
+                            SELECT [№], [Название должности]
+                            FROM (
+                                SELECT 
+                                    ROW_NUMBER() OVER (ORDER BY Код_должности) AS [№],
+                                    Наименование AS [Название должности]
+                                FROM Должности
+                                WHERE Код_должности != 3
+                            ) AS numbered
+                            ORDER BY [Название должности] {(orderBy.Contains("DESC") ? "DESC" : "ASC")}";
+                    }
+                    else
+                    {
+                        sql = $@"
+                            SELECT 
+                                ROW_NUMBER() OVER (ORDER BY Код_должности) AS [№],
+                                Наименование AS [Название должности]
+                            FROM Должности
+                            WHERE Код_должности != 3
+                            ORDER BY Код_должности ASC";
+                    }
 
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                     DataTable table = new DataTable();
@@ -511,6 +532,10 @@ namespace Kyrsovay
             itemZA.Click += (s, ev) => LoadPositions("Наименование DESC");
             menu.Items.Add(itemZA);
 
+            ToolStripMenuItem itemNum = new ToolStripMenuItem("По номеру (1, 2, 3...)");
+            itemNum.Click += (s, ev) => LoadPositions("Код_должности ASC");
+            menu.Items.Add(itemNum);
+
             menu.Show(btnFilterPositionByName, new Point(0, btnFilterPositionByName.Height));
         }
 
@@ -680,7 +705,7 @@ namespace Kyrsovay
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
                     conn.Open();
-                    string sql = "SELECT Код_должности, Наименование FROM Должности ORDER BY Наименование";
+                    string sql = "SELECT Код_должности, Наименование FROM Должности WHERE Код_должности != 3 ORDER BY Наименование";
                     SqlDataAdapter da = new SqlDataAdapter(sql, conn);
                     DataTable table = new DataTable();
                     da.Fill(table);
