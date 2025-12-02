@@ -29,6 +29,7 @@ namespace Kyrsovay
             // События фильтров
             btnFilterByName.Click += BtnFilterByName_Click;
             btnFilterByPrice.Click += BtnFilterByPrice_Click;
+            btnFilterByDate.Click += BtnFilterByDate_Click;
             btnResetFilters.Click += BtnResetFilters_Click;
 
             // События работы с заявками
@@ -208,6 +209,21 @@ namespace Kyrsovay
             menu.Items.Add(itemAsc);
 
             menu.Show(btnFilterByPrice, new Point(0, btnFilterByPrice.Height));
+        }
+
+        private void BtnFilterByDate_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem itemNew = new ToolStripMenuItem("Сначала новые (по убыванию)");
+            itemNew.Click += (s, ev) => LoadMyOrders("z.Дата_заказа DESC");
+            menu.Items.Add(itemNew);
+
+            ToolStripMenuItem itemOld = new ToolStripMenuItem("Сначала старые (по возрастанию)");
+            itemOld.Click += (s, ev) => LoadMyOrders("z.Дата_заказа ASC");
+            menu.Items.Add(itemOld);
+
+            menu.Show(btnFilterByDate, new Point(0, btnFilterByDate.Height));
         }
 
         private void BtnResetFilters_Click(object sender, EventArgs e)

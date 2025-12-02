@@ -26,6 +26,7 @@ namespace Kyrsovay
             btnFilterByPrice.Click += BtnFilterByPrice_Click;
             btnFilterByMaster.Click += BtnFilterByMaster_Click;
             btnFilterByStatus.Click += BtnFilterByStatus_Click;
+            btnFilterByDate.Click += BtnFilterByDate_Click;
             btnResetFilters.Click += BtnResetFilters_Click;
 
             // События работы с заявками
@@ -391,6 +392,21 @@ namespace Kyrsovay
             }
         }
 
+        private void BtnFilterByDate_Click(object sender, EventArgs e)
+        {
+            ContextMenuStrip menu = new ContextMenuStrip();
+
+            ToolStripMenuItem itemNew = new ToolStripMenuItem("Сначала новые (по убыванию)");
+            itemNew.Click += (s, ev) => LoadAllOrders("z.Дата_заказа DESC");
+            menu.Items.Add(itemNew);
+
+            ToolStripMenuItem itemOld = new ToolStripMenuItem("Сначала старые (по возрастанию)");
+            itemOld.Click += (s, ev) => LoadAllOrders("z.Дата_заказа ASC");
+            menu.Items.Add(itemOld);
+
+            menu.Show(btnFilterByDate, new Point(0, btnFilterByDate.Height));
+        }
+
         private void BtnResetFilters_Click(object sender, EventArgs e)
         {
             btnAllOrders.Text = "📋 Все заявки";
@@ -650,28 +666,51 @@ namespace Kyrsovay
                 {
                     conn.Open();
 
-                    string sql = @"
-                        DELETE FROM Заказы
-                        WHERE Код_заказа = @id";
-
-                    SqlCommand cmd = new SqlCommand(sql, conn);
-                    cmd.Parameters.AddWithValue("@id", _selectedOrderId);
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
+                    using (SqlTransaction transaction = conn.BeginTransaction())
                     {
-                        MessageBox.Show("✓ Заказ успешно удалён!", "Успех",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        try
+                        {
+                            // Сначала удаляем все связанные оплаты
+                            string deletePaymentsSql = @"
+                                DELETE FROM Оплаты 
+                                WHERE Код_заказа = @id";
 
-                        _selectedOrderId = -1;
-                        LoadAllOrders();
-                        ShowPanel(panelOrders);
-                    }
-                    else
-                    {
-                        MessageBox.Show("Заказ не найден или уже удалён.", "Внимание",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            SqlCommand deletePaymentsCmd = new SqlCommand(deletePaymentsSql, conn, transaction);
+                            deletePaymentsCmd.Parameters.AddWithValue("@id", _selectedOrderId);
+                            deletePaymentsCmd.ExecuteNonQuery();
+
+                            // Затем удаляем сам заказ
+                            string deleteOrderSql = @"
+                                DELETE FROM Заказы
+                                WHERE Код_заказа = @id";
+
+                            SqlCommand deleteOrderCmd = new SqlCommand(deleteOrderSql, conn, transaction);
+                            deleteOrderCmd.Parameters.AddWithValue("@id", _selectedOrderId);
+
+                            int rowsAffected = deleteOrderCmd.ExecuteNonQuery();
+
+                            if (rowsAffected > 0)
+                            {
+                                transaction.Commit();
+                                MessageBox.Show("✓ Заказ успешно удалён!", "Успех",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                _selectedOrderId = -1;
+                                LoadAllOrders();
+                                ShowPanel(panelOrders);
+                            }
+                            else
+                            {
+                                transaction.Rollback();
+                                MessageBox.Show("Заказ не найден или уже удалён.", "Внимание",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            }
+                        }
+                        catch
+                        {
+                            transaction.Rollback();
+                            throw;
+                        }
                     }
                 }
             }

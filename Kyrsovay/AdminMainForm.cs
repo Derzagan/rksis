@@ -480,15 +480,38 @@ namespace Kyrsovay
                     using (SqlConnection conn = new SqlConnection(_connectionString))
                     {
                         conn.Open();
-                        string sql = "DELETE FROM Заказы WHERE Код_заказа = @id";
-                        SqlCommand cmd = new SqlCommand(sql, conn);
-                        cmd.Parameters.AddWithValue("@id", orderId);
-                        cmd.ExecuteNonQuery();
-                    }
 
-                    MessageBox.Show("✓ Заказ успешно удалён!", "Успех",
-                        MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    LoadOrders();
+                        using (SqlTransaction transaction = conn.BeginTransaction())
+                        {
+                            try
+                            {
+                                // Сначала удаляем все связанные оплаты
+                                string deletePaymentsSql = @"
+                                    DELETE FROM Оплаты 
+                                    WHERE Код_заказа = @id";
+
+                                SqlCommand deletePaymentsCmd = new SqlCommand(deletePaymentsSql, conn, transaction);
+                                deletePaymentsCmd.Parameters.AddWithValue("@id", orderId);
+                                deletePaymentsCmd.ExecuteNonQuery();
+
+                                // Затем удаляем сам заказ
+                                string deleteOrderSql = "DELETE FROM Заказы WHERE Код_заказа = @id";
+                                SqlCommand deleteOrderCmd = new SqlCommand(deleteOrderSql, conn, transaction);
+                                deleteOrderCmd.Parameters.AddWithValue("@id", orderId);
+                                deleteOrderCmd.ExecuteNonQuery();
+
+                                transaction.Commit();
+                                MessageBox.Show("✓ Заказ успешно удалён!", "Успех",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                LoadOrders();
+                            }
+                            catch
+                            {
+                                transaction.Rollback();
+                                throw;
+                            }
+                        }
+                    }
                 }
                 catch (Exception ex)
                 {

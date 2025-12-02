@@ -26,6 +26,7 @@
             this.panelFilter = new System.Windows.Forms.Panel();
             this.btnFilterByName = new System.Windows.Forms.Button();
             this.btnFilterByPrice = new System.Windows.Forms.Button();
+            this.btnFilterByDate = new System.Windows.Forms.Button();
             this.btnResetFilters = new System.Windows.Forms.Button();
             this.panelOrderDetails = new System.Windows.Forms.Panel();
             this.panelDetailCenter = new System.Windows.Forms.Panel();
@@ -165,6 +166,7 @@
             this.panelFilter.BackColor = System.Drawing.Color.White;
             this.panelFilter.Controls.Add(this.btnFilterByName);
             this.panelFilter.Controls.Add(this.btnFilterByPrice);
+            this.panelFilter.Controls.Add(this.btnFilterByDate);
             this.panelFilter.Controls.Add(this.btnResetFilters);
             this.panelFilter.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelFilter.Location = new System.Drawing.Point(0, 0);
@@ -203,6 +205,21 @@
             this.btnFilterByPrice.Text = "💰 Фильтр по цене ▼";
             this.btnFilterByPrice.UseVisualStyleBackColor = false;
             // 
+            // btnFilterByDate
+            // 
+            this.btnFilterByDate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(122)))), ((int)(((byte)(204)))));
+            this.btnFilterByDate.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.btnFilterByDate.FlatAppearance.BorderSize = 0;
+            this.btnFilterByDate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnFilterByDate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.btnFilterByDate.ForeColor = System.Drawing.Color.White;
+            this.btnFilterByDate.Location = new System.Drawing.Point(355, 15);
+            this.btnFilterByDate.Name = "btnFilterByDate";
+            this.btnFilterByDate.Size = new System.Drawing.Size(160, 32);
+            this.btnFilterByDate.TabIndex = 2;
+            this.btnFilterByDate.Text = "📅 Фильтр по дате ▼";
+            this.btnFilterByDate.UseVisualStyleBackColor = false;
+            // 
             // btnResetFilters
             // 
             this.btnResetFilters.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(108)))), ((int)(((byte)(117)))), ((int)(((byte)(125)))));
@@ -211,7 +228,7 @@
             this.btnResetFilters.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnResetFilters.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.btnResetFilters.ForeColor = System.Drawing.Color.White;
-            this.btnResetFilters.Location = new System.Drawing.Point(355, 15);
+            this.btnResetFilters.Location = new System.Drawing.Point(525, 15);
             this.btnResetFilters.Name = "btnResetFilters";
             this.btnResetFilters.Size = new System.Drawing.Size(120, 32);
             this.btnResetFilters.TabIndex = 2;
@@ -462,6 +479,7 @@
         private System.Windows.Forms.Panel panelFilter;
         private System.Windows.Forms.Button btnFilterByName;
         private System.Windows.Forms.Button btnFilterByPrice;
+        private System.Windows.Forms.Button btnFilterByDate;
         private System.Windows.Forms.Button btnResetFilters;
 
         private System.Windows.Forms.Panel panelOrderDetails;
